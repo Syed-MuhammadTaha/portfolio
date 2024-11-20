@@ -7,9 +7,8 @@ html, body {
 }
 
 a, button, .custom-cursor-container {
-  cursor: none; /* Ensure the cursor is also hidden on interactive elements */
+  cursor: none;
 }
-
 @layer base {
   :root {
     --background: 0 0% 100%;
