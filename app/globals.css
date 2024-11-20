@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  cursor: none; /* Don't add this if you want the default pointer to stay visible */
+}
+
+a, button, .custom-cursor-container {
+  cursor: none; /* Ensure the cursor is also hidden on interactive elements */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

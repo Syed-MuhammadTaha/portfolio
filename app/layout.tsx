@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import CustomCursor from '@/components/custom/CustomCursor'
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +18,10 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${inter.className} antialiased`}
+
       >
+        
+        <CustomCursor />
         {children}
       </body>
     </html>
