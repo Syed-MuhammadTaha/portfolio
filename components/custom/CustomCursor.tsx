@@ -57,7 +57,7 @@ const CustomCursor = () => {
       <div
         className={`transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-all duration-150 ${
           isHovering ? 'w-14 h-14' : 'w-6 h-6'
-        } bg-[#850000] rounded-full`}
+        } bg-[#048A81] rounded-full`}
       >
         {isHovering && (
           <ArrowUpRight className="text-black" size={30} strokeWidth={3} />

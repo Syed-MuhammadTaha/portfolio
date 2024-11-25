@@ -11,6 +11,9 @@ const config = {
 	],
   prefix: "",
   theme: {
+    fontFamily: {
+      playfair: ['Playfair Display', 'serif'],
+    },
     container: {
       center: true,
       padding: "2rem",

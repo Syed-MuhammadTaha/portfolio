@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const Navbar = () => {
   return (
-    <section className="flex flex-col gap-1 px-8 py-8 font-bold text-white justify-end items-end z-[9999] relative">
+    <section className="flex flex-col gap-1 px-8 py-8 font-bold text-[#F1DABF] items-left z-[9999] relative">
       <FlipLink href="#">About</FlipLink>
       <FlipLink href="#">Experience</FlipLink>
       <FlipLink href="#">Projects</FlipLink>
@@ -22,7 +22,7 @@ const FlipLink = ({ children, href }: { children: string; href: string }) => {
       initial="initial"
       whileHover="hovered"
       href={href}
-      className="relative block overflow-hidden whitespace-nowrap text-4xl uppercase"
+      className="relative block overflow-hidden whitespace-nowrap text-6xl uppercase w-fit"
       style={{ lineHeight: 1 }} // Ensure line height is consistent
     >
       {/* First (normal) text */}

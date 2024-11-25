@@ -1,13 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 html, body {
   cursor: none; /* Don't add this if you want the default pointer to stay visible */
+  
 }
 
 a, button, .custom-cursor-container {
   cursor: none;
+
 }
 @layer base {
   :root {
