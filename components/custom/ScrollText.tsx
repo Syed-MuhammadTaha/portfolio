@@ -22,10 +22,10 @@ const ScrollText = () => {
     [-0.5, 0.5],
     ["45deg", "-45deg"]
   );
-  const skewX = useSpring(skewXRaw, { mass: 3, stiffness: 400, damping: 50 });
+  const skewX = useSpring(skewXRaw, { mass: 1, stiffness: 100, damping: 30 });
 
-  const xRaw = useTransform(scrollYProgress, [0, 1], [0, -7800]);
-  const x = useSpring(xRaw, { mass: 3, stiffness: 800, damping: 50 });
+  const xRaw = useTransform(scrollYProgress, [0, 1], [0, -8000]);
+  const x = useSpring(xRaw, { mass: 1, stiffness: 150, damping: 30 });
 
   return (
     <section
@@ -44,4 +44,4 @@ const ScrollText = () => {
   );
 };
 
-export default ScrollText
+export default ScrollText;
