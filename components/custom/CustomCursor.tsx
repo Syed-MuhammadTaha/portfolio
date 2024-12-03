@@ -60,7 +60,7 @@ const CustomCursor = () => {
         } bg-[#880808] rounded-full`}
       >
         {isHovering && (
-          <ArrowUpRight className="text-black" size={30} strokeWidth={3} />
+          <ArrowUpRight className="text-white" size={30} strokeWidth={3} />
         )}
       </div>
     </motion.div>
