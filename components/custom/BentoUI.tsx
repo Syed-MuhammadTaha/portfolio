@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import BentoPic from "@/assets/bento.png";
+import BentoGif from "@/assets/bento.gif";
 import Image from "next/image";
 import Github from "@/assets/GitHub.png";
 import Kaggle from "@/assets/Kaggle.png";
 import LinkedIn from "@/assets/LinkedIn.png";
 import Medium from "@/assets/Medium.png";
 import WhatsApp from "@/assets/WhatsApp.png";
+import useEmblaCarousel from 'embla-carousel-react'
 
 const BentoUI: React.FC = () => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [emblaRef] = useEmblaCarousel()
+
   return (
     <div className="bg-black text-white min-h-screen flex items-center justify-center">
       <div className="flex flex-row gap-4 h-full w-3/4">
@@ -16,13 +21,14 @@ const BentoUI: React.FC = () => {
         <div className="flex-1 basis-[30%] flex flex-col gap-4">
           {/* Profile Image */}
           <motion.div
-            className="bg-[#111111] rounded-md flex items-center justify-center flex-grow"
-            whileHover={{ scale: 1.05 }}
+            className="bg-[#111111] rounded-md flex items-center justify-center flex-grow overflow-hidden"
+            onHoverStart={() => setIsHovered(true)} // Start hover
+            onHoverEnd={() => setIsHovered(false)}  // End hover
           >
             <Image
-              src={BentoPic}
+              src={isHovered ? BentoGif : BentoPic} // Toggle image
               alt="Profile"
-              className="rounded-md"
+              className="object-cover"
               width={200}
               height={200}
             />
@@ -47,51 +53,51 @@ const BentoUI: React.FC = () => {
             <h2 className="text-2xl font-bold">ABOUT ME</h2>
           </motion.div>
 
-          {/* Recent Experience */}
-          <motion.div
-            className="bg-orange-600 rounded-md p-4 flex-grow"
-            whileHover={{ scale: 1.05 }}
-          >
-            <h3 className="text-xl font-bold mb-2">RECENT EXPERIENCE</h3>
-            <div className="text-sm">
-              <div className="mb-2">
-                <span className="font-bold">Freelance</span> <br />
-                Software Engineer <br />
-                Sep 2023 - Nov 2023
+          {/* Recent Experience and Current Time in Same Row */}
+          <div className="flex flex-row gap-4">
+            {/* Recent Experience */}
+            <motion.div
+              className="bg-[#4DCCBD] text-black rounded-md p-4 flex-grow basis-[75%]"
+              whileHover={{ scale: 1.05 }}
+            >
+              <h3 className="text-xl font-bold mb-2">RECENT EXPERIENCE</h3>
+              <div className="text-sm">
+                <div className="mb-2">
+                  <span className="font-bold">Freelance</span> <br />
+                  Software Engineer <br />
+                  Sep 2023 - Nov 2023
+                </div>
+                <div>
+                  <span className="font-bold">Freelance</span> <br />
+                  Software Engineer <br />
+                  Sep 2024 - Nov 2024
+                </div>
               </div>
-              <div>
-                <span className="font-bold">Freelance</span> <br />
-                Software Engineer <br />
-                Sep 2024 - Nov 2024
-              </div>
-            </div>
-          </motion.div>
+            </motion.div>
 
-          {/* Current Time */}
-          <motion.div
-            className="p-4 flex flex-col items-center flex-grow"
-            whileHover={{ scale: 1.05 }}
-          >
-            <h3 className="text-4xl font-bold">5:44</h3>
-            <span className="text-lg">PM</span>
-            <span className="text-sm mt-2">Current local time</span>
-          </motion.div>
+            {/* Current Time */}
+            <motion.div
+              className="rounded-md flex flex-col flex-grow basis-[25%]"
+              whileHover={{ scale: 1.05 }}
+            >
+              <h3 className="text-4xl font-bold">5:44</h3>
+              <span className="text-lg">PM</span>
+              <span className="text-sm mt-2">Current local time</span>
+            </motion.div>
+          </div>
 
           {/* Stack */}
           <motion.div
             className="bg-[#111111] rounded-md p-4 flex items-center justify-center space-x-4 flex-grow"
             whileHover={{ scale: 1.05 }}
           >
-            {["mongodb", "react", "node", "tensorflow", "mysql"].map(
-              (stack, idx) => (
-                <img
-                  key={idx}
-                  src={`https://via.placeholder.com/40?text=${stack}`}
-                  alt={stack}
-                  className="h-10"
-                />
-              )
-            )}
+            <div className="embla" ref={emblaRef}>
+              <div className="embla__container">
+                <div className="embla__slide">Slide 1</div>
+                <div className="embla__slide">Slide 2</div>
+                <div className="embla__slide">Slide 3</div>
+              </div>
+            </div>
           </motion.div>
         </div>
 
@@ -103,7 +109,7 @@ const BentoUI: React.FC = () => {
             whileHover={{ scale: 1.05 }}
           >
             {/* Row 1 */}
-            <div className="text-left text-3xl font-bold leading-tight text-[#C7C2BF]">
+            <div className="text-left text-3xl font-black leading-tight text-[#C7C2BF]">
               <div>LIN</div>
               <div>KS:</div>
             </div>
@@ -150,9 +156,6 @@ const BentoUI: React.FC = () => {
               <Image src={WhatsApp} alt="WhatsApp" className="h-12 w-12 object-contain" />
             </a>
           </motion.div>
-
-
-
 
           {/* Projects Created */}
           <motion.div

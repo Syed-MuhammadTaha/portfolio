@@ -4,7 +4,7 @@ import { StarsBackground } from "@/components/ui/stars-background";
 import ScrollText from "@/components/custom/ScrollText";
 import BentoUI from "@/components/custom/BentoUI";
 import Image from "next/image";
-import Img from "@/assets/profile.png";
+import Img from "@/assets/final.png";
 
 export default function Landing() {
   return (
