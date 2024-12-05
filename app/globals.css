@@ -8,15 +8,30 @@ html, body {
   cursor: none; /* Don't add this if you want the default pointer to stay visible */
   
 }
+
+
 .embla {
+  max-width: 100%;
+  --slide-spacing: 1rem;
+  --slide-size: 23%;
+  height:100%;
+  mask-image:linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 12.5%, rgb(0, 0, 0) 87.5%, rgba(0, 0, 0, 0) 100%)
+}
+.embla__viewport {
   overflow: hidden;
 }
 .embla__container {
   display: flex;
+  align-items: center;
+  height:100%;
+  touch-action: pan-y pinch-zoom;
+  margin-left: calc(var(--slide-spacing) * -1);
 }
 .embla__slide {
-  flex: 0 0 100%;
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--slide-size);
   min-width: 0;
+  padding-left: var(--slide-spacing);
 }
 
 

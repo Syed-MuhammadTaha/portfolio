@@ -9,7 +9,7 @@ const CustomCursor = () => {
   const mouseY = useMotionValue(0); // Tracks raw mouse Y position
 
   // Apply spring smoothing to mouseX and mouseY for smooth follow effect
-  const smoothX = useSpring(mouseX, { stiffness: 100, damping: 30 });
+  const smoothX = useSpring(mouseX, { stiffness:120, damping: 30 });
   const smoothY = useSpring(mouseY, { stiffness: 100, damping: 30 });
 
   // Handle mouse movement to track cursor position
