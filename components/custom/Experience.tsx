@@ -5,11 +5,11 @@ import { Timeline } from "@/components/ui/timeline";
 const Experience = () => {
   const data = [
     {
-      title: "2024",
+      title: "Sep 2024",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
-            Built and launched Aceternity UI and Aceternity UI Pro from scratch
+          <p className="text-neutral-800 dark:text-neutral-200 text-xl mb-8">
+            ML Intern, RapidsAI
           </p>
           <div className="grid grid-cols-2 gap-4">
             <Image
@@ -45,7 +45,7 @@ const Experience = () => {
       ),
     },
     {
-      title: "Early 2023",
+      title: "Dec 2024",
       content: (
         <div>
           <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">

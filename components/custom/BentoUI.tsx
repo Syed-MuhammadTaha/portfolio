@@ -28,7 +28,7 @@ const BentoUI: React.FC = () => {
 
 
   return (
-    <div className="bg-black text-[#C7C2BF] min-h-screen flex items-center justify-center">
+    <div className="bg-neutral-950 text-[#C7C2BF] min-h-screen flex items-center justify-center">
       <div className="flex flex-row gap-4 h-full w-3/4">
         {/* Column 1: 30% */}
         <div className="flex-1 basis-[25%] flex flex-col gap-4">

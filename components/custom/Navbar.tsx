@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const Navbar = () => {
   return (
-    <section className="flex flex-col gap-1 px-8 py-8 font-bold text-[#F1DABF] items-left z-[9999] relative">
+    <section className="flex flex-col gap-1 px-8 py-8 font-bold text-[#C7C2BF] items-left z-[9999] relative">
       <FlipLink href="#">About</FlipLink>
       <FlipLink href="#">Experience</FlipLink>
       <FlipLink href="#">Projects</FlipLink>

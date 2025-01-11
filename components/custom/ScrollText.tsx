@@ -24,20 +24,20 @@ const ScrollText = () => {
   );
   const skewX = useSpring(skewXRaw, { mass: 1, stiffness: 100, damping: 30 });
 
-  const xRaw = useTransform(scrollYProgress, [0, 1], [0, -8000]);
+  const xRaw = useTransform(scrollYProgress, [0, 1], [0, -4500]);
   const x = useSpring(xRaw, { mass: 1, stiffness: 150, damping: 30 });
 
   return (
     <section
       ref={targetRef}
-      className="h-[1000vh] text-[#EB4E27]"
+      className="h-[400vh] text-[#EB4E27]"
     >
-      <div className="sticky top-1/3 flex h-screen items-center inset-x-0">
+      <div className="flex sticky top-2/3 items-center inset-x-0">
         <motion.p
           style={{ skewX, x }}
           className="origin-bottom-left whitespace-nowrap text-[18em] font-black uppercase leading-[0.85]"
         >
-          Hi There! I am Syed Muhammad Taha Imam
+          Hi There! I am Taha
         </motion.p>
       </div>
     </section>

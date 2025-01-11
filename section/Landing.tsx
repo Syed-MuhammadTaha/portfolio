@@ -9,7 +9,7 @@ import BentoUI from "@/components/custom/BentoUI";
 import Experience from "@/components/custom/Experience";
 import Projects from "@/components/custom/Projects";
 import Image from "next/image";
-import Img from "@/assets/testing.png";
+import Img from "@/assets/photo.png";
 
 export default function Landing() {
   const lenisRef = useRef<Lenis | null>(null);
@@ -39,14 +39,15 @@ export default function Landing() {
   return (
     <>
       <div className="scroll-container">
-        <div className="min-h-screen bg-black relative scroll-section">
+        <div className="min-h-screen bg-neutral-950 relative scroll-section">
           <div className="flex sticky top-0 z-[999] h-[50vh] align-center items-center absolute">
             <div className="w-1/2">
               <Navbar />
             </div>
 
-            <div className="w-1/2 text-[#D7D9CE] font-playfair flex items-center justify-center mt-10">
-              <Image src={Img} alt="profile" width="400" height="400" />
+            <div className="w-1/2 text-[#D7D9CE] font-playfair flex items-center justify-center">
+              <div className="w-1/2"><Image src={Img} alt="profile" className="h-full" /></div>
+              
             </div>
           </div>
           <div className="w-100">
