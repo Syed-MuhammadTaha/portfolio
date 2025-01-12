@@ -1,28 +1,31 @@
 "use client";
 import React from "react";
 import { HeroParallax } from "../ui/hero-parallax";
-
+import funoon from "@/assets/funoon.png";
+import transformer from "@/assets/transformer.png";
+import unet from "@/assets/unet.png";
 const Projects = () => {
   return <HeroParallax products={products} />;
 }
 export const products = [
+  
   {
-    title: "Moonbeam",
-    link: "https://gomoonbeam.com",
+    title: "Transformer from scratch",
+    link: "https://github.com/Syed-MuhammadTaha/TransformerFromScratch",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/moonbeam.png",
+      transformer,
   },
   {
-    title: "Cursor",
-    link: "https://cursor.so",
+    title: "Funoon",
+    link: "https://funoonartisans.vercel.app",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/cursor.png",
+      funoon,
   },
   {
-    title: "Rogue",
-    link: "https://userogue.com",
+    title: "Pet Segmentation using U-Net",
+    link: "https://github.com/Syed-MuhammadTaha/ImageSegmentationUNet",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/rogue.png",
+      unet,
   },
 
   {
@@ -67,37 +70,6 @@ export const products = [
     link: "https://smartbridgetech.com",
     thumbnail:
       "https://aceternity.com/images/products/thumbnails/new/smartbridge.png",
-  },
-  {
-    title: "Renderwork Studio",
-    link: "https://renderwork.studio",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/renderwork.png",
-  },
-
-  {
-    title: "Creme Digital",
-    link: "https://cremedigital.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/cremedigital.png",
-  },
-  {
-    title: "Golden Bells Academy",
-    link: "https://goldenbellsacademy.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/goldenbellsacademy.png",
-  },
-  {
-    title: "Invoker Labs",
-    link: "https://invoker.lol",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/invoker.png",
-  },
-  {
-    title: "E Free Invoice",
-    link: "https://efreeinvoice.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/efreeinvoice.png",
   },
 ];
 
