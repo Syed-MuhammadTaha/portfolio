@@ -7,7 +7,7 @@ import {
 } from "framer-motion";
 import React, { useRef } from "react";
 
-const ScrollText = () => {
+const HorizontalScroll = () => {
   const targetRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -44,4 +44,4 @@ const ScrollText = () => {
   );
 };
 
-export default ScrollText;
+export default HorizontalScroll;

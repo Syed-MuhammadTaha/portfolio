@@ -1,5 +1,5 @@
 import React from "react";
-import { BackgroundGradientAnimation } from "@/components/Acceternity/LavaLamp";
+import { LavaLamp } from "@/components/Acceternity/LavaLamp";
 import emailjs from 'emailjs-com';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -22,7 +22,7 @@ export function Contact() {
     });
   };
   return (
-    <BackgroundGradientAnimation>
+    <LavaLamp>
       <ToastContainer
         position="top-right" // Position of the toast (e.g., 'top-left', 'bottom-center')
         autoClose={5000} // Time in milliseconds before the toast auto closes
@@ -51,7 +51,7 @@ export function Contact() {
 
       </div>
 
-    </BackgroundGradientAnimation>
+    </LavaLamp>
   );
 }
 

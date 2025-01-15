@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 
-export const BackgroundGradientAnimation = ({
+export const LavaLamp = ({
   gradientBackgroundStart = "bg-neutral-950",
   gradientBackgroundEnd = "bg-neutral-950",
   firstColor = "235, 78, 39",    // EB4E27
