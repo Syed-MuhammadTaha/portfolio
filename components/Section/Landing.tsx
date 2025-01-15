@@ -44,12 +44,12 @@ export default function Landing() {
       <div className="bg-background">
         <div className="min-h-screen relative">
           <div className="flex sticky top-0 z-[999] h-[50vh] align-center items-center absolute">
-            <div className="w-1/2">
+            <div className="w-1/2 hidden sm:block md:block lg:block">
               <Navbar />
             </div>
 
-            <div className="w-1/2 text-[#D7D9CE] font-playfair flex items-center justify-center">
-              <div className="w-1/2"><Image src={Img} alt="profile" className="h-full" /></div>
+            <div className="w-3/4 sm:w-1/2 md:w-1/2 lg:w-1/2 flex items-center justify-center mx-auto">
+              <div><Image src={Img} alt="profile" className="h-full w-full sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto" /></div>
             </div>
           </div>
           <div className="max-w-[100vw]">
@@ -63,14 +63,14 @@ export default function Landing() {
           <BentoUI />
         </div>
 
-        <div className="min-h-screen">
+        <div className="min-h-screen" id="experience">
           <Experience />
         </div>
 
-        <div className="">
+        <div id="project">
           <Projects />
         </div>
-        <div className="">
+        <div id="contact">
           <Contact />
         </div>
       </div>

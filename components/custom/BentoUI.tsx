@@ -17,6 +17,7 @@ import node from '@/assets/node.png'
 import react from '@/assets/react.png'
 import sql from '@/assets/sql.png'
 import CurrentTime from "@/components/Custom/CurrentTime";
+import { TextHoverEffect } from "@/components/Acceternity/text-hover-effect";
 
 const BentoUI: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -31,20 +32,20 @@ const BentoUI: React.FC = () => {
 
 
   return (
-    <div className="text-neutral-400 min-h-screen flex items-center justify-center w-3/4 mx-auto">
+    <div className="text-neutral-400 min-h-screen flex items-center justify-center w-3/4 mx-auto" id="bento">
   <div className="flex flex-col sm:flex-row gap-4 h-full w-full">
     {/* Column 1: 30% */}
     <div className="flex-1 basis-[25%] flex flex-col gap-4">
       {/* Profile Image */}
       <motion.div
-        className="bg-foreground rounded-md flex items-center justify-center overflow-hidden "
+        className="bg-foreground rounded-md flex items-center justify-center overflow-hidden hidden sm:block md:block lg:block h-3/4"
         onHoverStart={() => setIsHovered(true)} // Start hover
         onHoverEnd={() => setIsHovered(false)}  // End hover
       >
             <Image
               src={isHovered ? BentoGif : BentoPic} // Toggle image
               alt="Profile"
-              className="object-cover"
+              className="object-cover m-auto"
               width={200}
               height={200}
             />
@@ -52,14 +53,13 @@ const BentoUI: React.FC = () => {
   
           {/* Roles */}
           <motion.div
-            className="p-2 flex items-center justify-center flex-grow"
+            className="p-2 flex items-center justify-center flex-grow hidden sm:block md:block lg:block pt-5"
             
           >
             <h3 className="text-xl font-bold text-center">Machine Learning Engineer</h3>
           </motion.div>
         </div>
   
-        {/* Column 2: 50% */}
         <div className="flex-1 basis-[60%] flex flex-col gap-4 ">
           <motion.div
             className="bg-foreground rounded-md p-5 flex flex-col items-start justify-center flex-grow"
@@ -76,10 +76,12 @@ Driven by a passion for solving real-world problems through technology, I am now
           <div className="flex flex-row gap-4">
             {/* Recent Experience */}
             <motion.div
-              className="bg-foreground rounded-md p-4 flex-grow basis-[75%] shadow-lg"
+              className="bg-foreground rounded-md px-4 pt-4 pb-10 flex-grow basis-[75%] shadow-lg"
             >
               {/* #eb4e27 */}
               <h3 className="text-2xl font-bold mb-4 tracking-wide text-neutral-700">CURRENTLY <span className="text-secondary">BUILDING</span></h3>
+              <TextHoverEffect text="SABLE" />
+
               {/* <div className="text-base leading-relaxed space-y-4">
                 
                 <div>
@@ -170,7 +172,7 @@ Driven by a passion for solving real-world problems through technology, I am now
   
             {/* Row 2 */}
             <a
-              href="#"
+              href="https://www.kaggle.com/syedtahaluvsai"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-neutral-300 rounded-md p-2 flex items-center justify-center h-3/4"
@@ -220,9 +222,11 @@ Driven by a passion for solving real-world problems through technology, I am now
             className="flex items-center justify-center flex-grow"
             
           >
-            <button className="text-[#eb4e27] font-bold px-5 py-5 rounded-md border border-primary hover:bg-primary hover:text-black w-full">
+            <a href="/resume.pdf" download="resume.pdf" className="w-full">
+    
+            <button className="text-primary font-bold px-5 py-5 rounded-md border border-primary hover:bg-primary hover:text-black w-full">
               Resumé
-            </button>
+            </button></a>
           </motion.div>
         </div>
       </div>

@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 const Navbar = () => {
   return (
     <section className="flex flex-col gap-1 px-8 py-8 font-bold text-neutral-600 items-left z-[9999] relative">
-      <FlipLink href="#">About</FlipLink>
-      <FlipLink href="#">Experience</FlipLink>
-      <FlipLink href="#">Projects</FlipLink>
-      <FlipLink href="#">Contact</FlipLink>
+      <FlipLink href="#bento">About</FlipLink>
+      <FlipLink href="#experience">Experience</FlipLink>
+      <FlipLink href="#project">Projects</FlipLink>
+      <FlipLink href="#contact">Contact</FlipLink>
     </section>
   );
 };
