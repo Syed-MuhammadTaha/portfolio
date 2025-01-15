@@ -1,4 +1,4 @@
-import Landing from '@/components/section/Landing'
+import Landing from '@/components/custom/Landing'
 export default function Home() {
   return (
     <>
