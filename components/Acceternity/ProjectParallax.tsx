@@ -17,7 +17,7 @@ export const HeroParallax = ({
   products: {
     title: string;
     link: string;
-    thumbnail: string;
+    thumbnail: string | StaticImageData; // Update the type to accept both string and StaticImageData
   }[];
 }) => {
   const firstRow = products.slice(0, 5);
@@ -54,6 +54,7 @@ export const HeroParallax = ({
     useTransform(scrollYProgress, [0, 0.2], [-100, 500]),
     springConfig
   );
+
   return (
     <div
       ref={ref}
@@ -92,6 +93,7 @@ export const HeroParallax = ({
   );
 };
 
+
 export const Header = () => {
   return (
     <div className="max-w-5xl relative mx-auto py-20 px-4 w-full left-0 top-0">
@@ -109,10 +111,15 @@ export const ProductCard = ({
   product: {
     title: string;
     link: string;
-    thumbnail: string;
+    thumbnail: string | StaticImageData; // Accept both string and StaticImageData
   };
   translate: MotionValue<number>;
 }) => {
+  // Handle both string and StaticImageData for the thumbnail
+  const thumbnailSrc = typeof product.thumbnail === 'string' 
+    ? product.thumbnail 
+    : product.thumbnail.src; // Extract the src from StaticImageData if needed
+
   return (
     <motion.div
       style={{
@@ -129,7 +136,7 @@ export const ProductCard = ({
         className="block group-hover/product:shadow-2xl "
       >
         <Image
-          src={product.thumbnail}
+          src={thumbnailSrc}
           height="600"
           width="600"
           className="object-cover object-left-top absolute h-full w-full inset-0"

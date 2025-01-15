@@ -1,7 +1,5 @@
 import React from "react";
 import { BackgroundGradientAnimation } from "@/components/Acceternity/LavaLamp";
-
-import { useState } from 'react';
 import emailjs from 'emailjs-com';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -17,9 +15,9 @@ export function Contact() {
       template as string,
       event.target as HTMLFormElement,
       user as string
-    ).then((result) => {
+    ).then(() => {
       toast.success('Email sent successfully!');
-    }).catch((error) => {
+    }).catch(() => {
       toast.error('Failed to send email, please try again later.');
     });
   };
@@ -38,7 +36,7 @@ export function Contact() {
       <div className="absolute z-50 inset-0 flex items-center justify-center text-white mx-8">
 
         <div className="p-10 mx-auto max-w-xl backdrop-blur-md bg-black/60 rounded-xl">
-          <h1 className="text-3xl font-bold text-center mb-4 text-neutral-400">Lets's <span className="text-primary">Connect</span>!</h1>
+          <h1 className="text-3xl font-bold text-center mb-4 text-neutral-400">Lets <span className="text-primary">Connect</span>!</h1>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <input type='text' placeholder='Name'
               className="w-full rounded-sm p-4 bg-neutral-900 focus:border-black text-sm outline-none transition-all" name="user_name" />

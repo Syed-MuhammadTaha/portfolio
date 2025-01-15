@@ -82,19 +82,6 @@ Driven by a passion for solving real-world problems through technology, I am now
               <h3 className="text-2xl font-bold mb-4 tracking-wide text-neutral-700">CURRENTLY <span className="text-secondary">BUILDING</span></h3>
               <TextHoverEffect text="SABLE" />
 
-              {/* <div className="text-base leading-relaxed space-y-4">
-                
-                <div>
-                  <span className="font-bold text-md">Multi-Modal RAG Agents</span>  
-                  <p className="mt-1">Developing AI agents that integrate multiple data sources to deliver advanced retrieval-augmented generation capabilities.</p>
-                </div>
-                
-                <div>
-                  <span className="font-bold text-md">NPX-Based Portfolio</span>  
-                  <p className="mt-1">Building a terminal-based, interactive version of my portfolio using NPX.</p>
-                </div>
-                
-              </div> */}
             </motion.div>
 
   

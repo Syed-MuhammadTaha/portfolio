@@ -4,7 +4,7 @@ import { HeroParallax } from "../Acceternity/ProjectParallax";
 import funoon from "@/assets/funoon.png";
 import transformer from "@/assets/transformer.png";
 import unet from "@/assets/unet.png";
-import mlops from "@/assets/mlops.avif";
+import mlops from "@/assets/mlops.jpg";
 import inception from "@/assets/inception.png";
 import facial from "@/assets/facial.png"; 
 import faryaad from "@/assets/faryaad.png";

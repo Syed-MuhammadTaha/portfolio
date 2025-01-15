@@ -11,7 +11,6 @@ import Projects from "@/components/Custom/Projects";
 import Image from "next/image";
 import Img from "@/assets/photo.png";
 import Contact from "@/components/Custom/Contact"
-import Footer from "@/components/Custom/Footer"
 
 
 export default function Landing() {
