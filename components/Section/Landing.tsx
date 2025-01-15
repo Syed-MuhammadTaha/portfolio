@@ -2,15 +2,15 @@
 
 import { useEffect, useRef } from "react";
 import Lenis from "@studio-freight/lenis";
-import Navbar from "@/components/Custom/Navbar";
-import { StarsBackground } from "@/components/Acceternity/Stars";
-import ScrollText from "@/components/Custom/HorizontalScroll";
-import BentoUI from "@/components/Custom/BentoUI";
-import Experience from "@/components/Custom/Experience";
-import Projects from "@/components/Custom/Projects";
+import Navbar from "@/components/custom/Navbar";
+import { StarsBackground } from "@/components/acceternity/Stars";
+import ScrollText from "@/components/custom/HorizontalScroll";
+import BentoUI from "@/components/custom/BentoUI";
+import Experience from "@/components/custom/Experience";
+import Projects from "@/components/custom/Projects";
 import Image from "next/image";
 import Img from "@/assets/photo.png";
-import Contact from "@/components/Custom/Contact"
+import Contact from "@/components/custom/Contact"
 
 
 export default function Landing() {

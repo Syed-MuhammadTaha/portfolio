@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { Timeline } from "@/components/Acceternity/Timeline";
+import { Timeline } from "@/components/acceternity/Timeline";
 import kalambot from "@/assets/kalambot.png";
 import seqdance from "@/assets/seqdance.png";
 import meme from "@/assets/meme.jpg";

@@ -18,11 +18,10 @@
         "name": "next"
       }
     ],
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["/*"]
+      "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/Custom/RevealLinks.jsx", "app/page.tsx", "components/Custom/Contact.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/custom/RevealLinks.jsx", "app/page.tsx", "components/custom/Contact.tsx"],
   "exclude": ["node_modules"]
 }
