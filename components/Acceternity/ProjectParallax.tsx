@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { StaticImageData } from "next/image";
 
-export const HeroParallax = ({
+const ProjectParallax = ({
   products,
 }: {
   products: {
@@ -150,3 +150,5 @@ export const ProductCard = ({
     </motion.div>
   );
 };
+
+export default ProjectParallax;

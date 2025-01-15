@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Lenis from "@studio-freight/lenis";
 import Navbar from "@/components/custom/Navbar";
-import { StarsBackground } from "@/components/acceternity/Stars";
+import Stars from "@/components/acceternity/Stars";
 import ScrollText from "@/components/custom/HorizontalScroll";
 import BentoUI from "@/components/custom/BentoUI";
 import Experience from "@/components/custom/Experience";
@@ -55,7 +55,7 @@ export default function Landing() {
             <ScrollText />
           </div>
 
-          <StarsBackground />
+          <Stars />
         </div>
 
         <div className="min-h-screen">

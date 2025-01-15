@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 
-export const LavaLamp = ({
+const LavaLamp = ({
   gradientBackgroundStart = "bg-neutral-950",
   gradientBackgroundEnd = "bg-neutral-950",
   firstColor = "235, 78, 39",    // EB4E27
@@ -87,7 +87,7 @@ export const LavaLamp = ({
     size,
     blendingValue,
   ]);
-  
+
   useEffect(() => {
     function move() {
       if (!interactiveRef.current) {
@@ -209,3 +209,5 @@ export const LavaLamp = ({
     </div>
   );
 };
+
+export default LavaLamp;

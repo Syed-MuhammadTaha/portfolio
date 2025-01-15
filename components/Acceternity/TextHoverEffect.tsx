@@ -2,7 +2,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-export const TextHoverEffect = ({
+const TextHoverEffect = ({
   text,
   duration,
 }: {
@@ -131,3 +131,5 @@ export const TextHoverEffect = ({
     </svg>
   );
 };
+
+export default TextHoverEffect;
