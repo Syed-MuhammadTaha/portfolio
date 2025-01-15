@@ -1,5 +1,5 @@
 import React from "react";
-import LavaLamp from "@/components/acceternity/LavaLamp";
+import LavaLamp from "@/components/LavaLamp";
 import emailjs from 'emailjs-com';
 import { ToastContainer, toast } from 'react-toastify';
 

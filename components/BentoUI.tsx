@@ -16,8 +16,8 @@ import mongo from '@/assets/mongo.png'
 import node from '@/assets/node.png'
 import react from '@/assets/react.png'
 import sql from '@/assets/sql.png'
-import CurrentTime from "@/components/custom/CurrentTime";
-import TextHoverEffect from "@/components/acceternity/TextHoverEffect";
+import CurrentTime from "@/components/CurrentTime";
+import TextHoverEffect from "@/components/TextHoverEffect";
 
 const BentoUI: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);

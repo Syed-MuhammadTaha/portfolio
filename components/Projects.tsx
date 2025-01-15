@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import HeroParallax from "@/components/acceternity/ProjectParallax";
+import HeroParallax from "@/components/ProjectParallax";
 import funoon from "@/assets/funoon.png";
 import transformer from "@/assets/transformer.png";
 import unet from "@/assets/unet.png";
