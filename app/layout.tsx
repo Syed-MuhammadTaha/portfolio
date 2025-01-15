@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import CustomCursor from '@/components/custom/CustomCursor'
+import CustomCursor from '@/components/Custom/Cursor'
 import {motion} from 'framer-motion'
 export const metadata: Metadata = {
   title: "Create Next App",

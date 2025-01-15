@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { StaticImageData } from "next/image";
 
 export const HeroParallax = ({
   products,
@@ -56,7 +57,7 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="h-[250vh] bg-neutral-950 py-20 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[230vh] bg-neutral-950 py-20 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
       <motion.div
@@ -95,7 +96,7 @@ export const Header = () => {
   return (
     <div className="max-w-5xl relative mx-auto py-20 px-4 w-full left-0 top-0">
       <h1 className="text-6xl text-[#eb4e27] font-black ">
-        PROJECT SHOWCASE
+        Project <span className="text-neutral-800">Showcase</span>.
       </h1>
     </div>
   );

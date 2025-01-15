@@ -2,14 +2,17 @@
 
 import { useEffect, useRef } from "react";
 import Lenis from "@studio-freight/lenis";
-import Navbar from "@/components/custom/Navbar";
-import { StarsBackground } from "@/components/ui/stars-background";
-import ScrollText from "@/components/custom/ScrollText";
-import BentoUI from "@/components/custom/BentoUI";
-import Experience from "@/components/custom/Experience";
-import Projects from "@/components/custom/Projects";
+import Navbar from "@/components/Custom/Navbar";
+import { StarsBackground } from "@/components/Acceternity/Stars";
+import ScrollText from "@/components/Custom/HorizontalScroll";
+import BentoUI from "@/components/Custom/BentoUI";
+import Experience from "@/components/Custom/Experience";
+import Projects from "@/components/Custom/Projects";
 import Image from "next/image";
 import Img from "@/assets/photo.png";
+import Contact from "@/components/Custom/Contact"
+import Footer from "@/components/Custom/Footer"
+
 
 export default function Landing() {
   const lenisRef = useRef<Lenis | null>(null);
@@ -38,8 +41,8 @@ export default function Landing() {
 
   return (
     <>
-      <div className="scroll-container">
-        <div className="min-h-screen bg-neutral-950 relative scroll-section">
+      <div className="bg-background">
+        <div className="min-h-screen relative">
           <div className="flex sticky top-0 z-[999] h-[50vh] align-center items-center absolute">
             <div className="w-1/2">
               <Navbar />
@@ -47,28 +50,31 @@ export default function Landing() {
 
             <div className="w-1/2 text-[#D7D9CE] font-playfair flex items-center justify-center">
               <div className="w-1/2"><Image src={Img} alt="profile" className="h-full" /></div>
-              
             </div>
           </div>
-          <div className="w-100">
+          <div className="max-w-[100vw]">
             <ScrollText />
           </div>
 
           <StarsBackground />
         </div>
 
-        <div className="min-h-screen scroll-section">
+        <div className="min-h-screen">
           <BentoUI />
         </div>
 
-        <div className="min-h-screen scroll-section">
+        <div className="min-h-screen">
           <Experience />
         </div>
 
-        <div className="scroll-section">
+        <div className="">
           <Projects />
         </div>
+        <div className="">
+          <Contact />
+        </div>
       </div>
+      
     </>
   );
 }

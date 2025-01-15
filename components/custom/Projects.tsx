@@ -1,9 +1,14 @@
 "use client";
 import React from "react";
-import { HeroParallax } from "../ui/hero-parallax";
+import { HeroParallax } from "../Acceternity/ProjectParallax";
 import funoon from "@/assets/funoon.png";
 import transformer from "@/assets/transformer.png";
 import unet from "@/assets/unet.png";
+import mlops from "@/assets/mlops.avif";
+import inception from "@/assets/inception.png";
+import facial from "@/assets/facial.png"; 
+import faryaad from "@/assets/faryaad.png";
+
 const Projects = () => {
   return <HeroParallax products={products} />;
 }
@@ -29,10 +34,10 @@ export const products = [
   },
 
   {
-    title: "Editorially",
-    link: "https://editorially.org",
+    title: "Neural Style Transfer",
+    link: "https://github.com/Syed-MuhammadTaha/TFHubNeuralStyleTransfer",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/editorially.png",
+      facial,
   },
   {
     title: "Editrix AI",
@@ -48,22 +53,22 @@ export const products = [
   },
 
   {
-    title: "Algochurn",
+    title: "Transfer Learning on Chest X-Rays",
     link: "https://algochurn.com",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/algochurn.png",
+      inception,
   },
   {
-    title: "Aceternity UI",
-    link: "https://ui.aceternity.com",
+    title: "Hugging Face CI/CD",
+    link: "https://github.com/Syed-MuhammadTaha/mlops",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/aceternityui.png",
+      mlops,
   },
   {
-    title: "Tailwind Master Kit",
-    link: "https://tailwindmasterkit.com",
+    title: "Faryaad",
+    link: "https://faryaad.netlify.app",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/tailwindmasterkit.png",
+      faryaad,
   },
   {
     title: "SmartBridge",

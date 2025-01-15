@@ -11,7 +11,7 @@ function CurrentTime() {
     };
 
     updateTime();
-    const intervalId = setInterval(updateTime, 1000); // Update every second
+    const intervalId = setInterval(updateTime, 30000); // Update every second
 
     return () => clearInterval(intervalId);
   }, []);

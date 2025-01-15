@@ -16,7 +16,7 @@ import mongo from '@/assets/mongo.png'
 import node from '@/assets/node.png'
 import react from '@/assets/react.png'
 import sql from '@/assets/sql.png'
-import CurrentTime from "@/components/custom/CurrentTime";
+import CurrentTime from "@/components/Custom/CurrentTime";
 
 const BentoUI: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -31,16 +31,16 @@ const BentoUI: React.FC = () => {
 
 
   return (
-    <div className="bg-neutral-950 text-[#C7C2BF] min-h-screen flex items-center justify-center">
-      <div className="flex flex-row gap-4 h-full w-3/4">
-        {/* Column 1: 30% */}
-        <div className="flex-1 basis-[25%] flex flex-col gap-4 ">
-          {/* Profile Image */}
-          <motion.div
-            className="bg-[#111111] rounded-md flex items-center justify-center flex-grow overflow-hidden"
-            onHoverStart={() => setIsHovered(true)} // Start hover
-            onHoverEnd={() => setIsHovered(false)}  // End hover
-          >
+    <div className="text-neutral-400 min-h-screen flex items-center justify-center w-3/4 mx-auto">
+  <div className="flex flex-col sm:flex-row gap-4 h-full w-full">
+    {/* Column 1: 30% */}
+    <div className="flex-1 basis-[25%] flex flex-col gap-4">
+      {/* Profile Image */}
+      <motion.div
+        className="bg-foreground rounded-md flex items-center justify-center overflow-hidden "
+        onHoverStart={() => setIsHovered(true)} // Start hover
+        onHoverEnd={() => setIsHovered(false)}  // End hover
+      >
             <Image
               src={isHovered ? BentoGif : BentoPic} // Toggle image
               alt="Profile"
@@ -62,10 +62,10 @@ const BentoUI: React.FC = () => {
         {/* Column 2: 50% */}
         <div className="flex-1 basis-[60%] flex flex-col gap-4 ">
           <motion.div
-            className="bg-[#111111] rounded-md p-5 flex flex-col items-start justify-center flex-grow"
+            className="bg-foreground rounded-md p-5 flex flex-col items-start justify-center flex-grow"
             
           >
-            <h2 className="text-2xl font-bold mb-2">ABOUT ME</h2>
+            <h2 className="text-2xl font-bold mb-2 text-neutral-700">ABOUT ME</h2>
             <p className="w-75">
               
 Driven by a passion for solving real-world problems through technology, I am now focused on leveraging machine learning to create innovative, data-driven solutions.
@@ -76,22 +76,23 @@ Driven by a passion for solving real-world problems through technology, I am now
           <div className="flex flex-row gap-4">
             {/* Recent Experience */}
             <motion.div
-              className="bg-[#eb4e27] text-black rounded-md p-4 flex-grow basis-[75%] shadow-lg"
+              className="bg-foreground rounded-md p-4 flex-grow basis-[75%] shadow-lg"
             >
-              <h3 className="text-2xl font-bold mb-4 tracking-wide">CURRENTLY BUILDING</h3>
-              <div className="text-base leading-relaxed space-y-4">
+              {/* #eb4e27 */}
+              <h3 className="text-2xl font-bold mb-4 tracking-wide text-neutral-700">CURRENTLY <span className="text-secondary">BUILDING</span></h3>
+              {/* <div className="text-base leading-relaxed space-y-4">
                 
                 <div>
-                  <span className="font-semibold text-md">Multi-Modal RAG Agents</span>  
+                  <span className="font-bold text-md">Multi-Modal RAG Agents</span>  
                   <p className="mt-1">Developing AI agents that integrate multiple data sources to deliver advanced retrieval-augmented generation capabilities.</p>
                 </div>
                 
                 <div>
-                  <span className="font-semibold text-md">NPX-Based Portfolio</span>  
+                  <span className="font-bold text-md">NPX-Based Portfolio</span>  
                   <p className="mt-1">Building a terminal-based, interactive version of my portfolio using NPX.</p>
                 </div>
                 
-              </div>
+              </div> */}
             </motion.div>
 
   
@@ -107,11 +108,11 @@ Driven by a passion for solving real-world problems through technology, I am now
   
           {/* Stack */}
           <motion.div
-            className="bg-[#111111] rounded-md p-4 w-full flex flex-grow items-center overflow-hidden"
+            className="bg-foreground rounded-md p-4 w-full flex flex-grow items-center overflow-hidden"
             
           >
             <div className="w-1/4">
-              <h3 className="text-2xl font-bold px">STACK</h3>
+              <h3 className="text-2xl font-bold px text-neutral-700">STACK</h3>
             </div>
   
             <div className="embla w-3/4" ref={emblaRef}>
@@ -146,23 +147,23 @@ Driven by a passion for solving real-world problems through technology, I am now
             className="rounded-md grid grid-rows-2 grid-cols-3 gap-x-2 items-center justify-center flex-grow"
           >
             {/* Row 1 */}
-            <div className="text-left text-3xl font-black leading-tight text-white">
+            <div className="text-left text-3xl font-black leading-tight text-neutral-300">
               <div>LIN</div>
               <div>KS:</div>
             </div>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/syed-muhammad-taha-imam/"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white rounded-md p-2 flex items-center justify-center h-3/4"
+              className="bg-neutral-300 rounded-md p-2 flex items-center justify-center h-3/4"
             >
               <Image src={LinkedIn} alt="LinkedIn" className="h-12 w-12 object-contain" />
             </a>
             <a
-              href="https://github.com"
+              href="https://github.com/Syed-MuhammadTaha"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white rounded-md p-2 flex items-center justify-center h-3/4"
+              className="bg-neutral-300 rounded-md p-2 flex items-center justify-center h-3/4"
             >
               <Image src={Github} alt="GitHub" className="h-12 w-12 object-contain" />
             </a>
@@ -172,23 +173,23 @@ Driven by a passion for solving real-world problems through technology, I am now
               href="#"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white rounded-md p-2 flex items-center justify-center h-3/4"
+              className="bg-neutral-300 rounded-md p-2 flex items-center justify-center h-3/4"
             >
               <Image src={Kaggle} alt="Kaggle" className="h-12 w-12 object-contain" />
             </a>
             <a
-              href="#"
+              href="https://medium.com/@tahaML"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white rounded-md p-2 flex items-center justify-center h-3/4"
+              className="bg-neutral-300 rounded-md p-2 flex items-center justify-center h-3/4"
             >
               <Image src={Medium} alt="Medium" className="h-12 w-12 object-contain" />
             </a>
             <a
-              href="#"
+              href="https://wa.me/923340518269"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white rounded-md p-2 flex items-center justify-center h-3/4"
+              className="bg-neutral-300 rounded-md p-2 flex items-center justify-center h-3/4"
             >
               <Image src={WhatsApp} alt="WhatsApp" className="h-12 w-12 object-contain" />
             </a>
@@ -196,7 +197,7 @@ Driven by a passion for solving real-world problems through technology, I am now
   
           {/* Projects Created */}
           <motion.div
-            className="bg-[#111111] rounded-md p-4 flex items-center justify-center flex-grow"
+            className="bg-foreground rounded-md p-4 flex items-center justify-center flex-grow"
             
           >
             <div className="">
@@ -206,7 +207,7 @@ Driven by a passion for solving real-world problems through technology, I am now
           </motion.div>
   
           <motion.div
-            className="bg-[#111111] rounded-md p-4 flex items-center justify-center flex-grow"
+            className="bg-foreground rounded-md p-4 flex items-center justify-center flex-grow"
             
           >
             <div className="px-3">
@@ -219,8 +220,8 @@ Driven by a passion for solving real-world problems through technology, I am now
             className="flex items-center justify-center flex-grow"
             
           >
-            <button className="text-[#b3dec1] font-bold px-5 py-5 rounded-md border border-[#b3dec1] hover:bg-[#b3dec1] hover:text-black w-full">
-              Resume
+            <button className="text-[#eb4e27] font-bold px-5 py-5 rounded-md border border-primary hover:bg-primary hover:text-black w-full">
+              Resumé
             </button>
           </motion.div>
         </div>

@@ -30,9 +30,9 @@ const ScrollText = () => {
   return (
     <section
       ref={targetRef}
-      className="h-[400vh] text-[#EB4E27]"
+      className="h-[400vh] text-primary"
     >
-      <div className="flex sticky top-2/3 items-center inset-x-0">
+      <div className="flex sticky top-2/3 items-center inset-x-0 overflow-x-hidden">
         <motion.p
           style={{ skewX, x }}
           className="origin-bottom-left whitespace-nowrap text-[18em] font-black uppercase leading-[0.85]"
