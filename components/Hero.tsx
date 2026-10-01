@@ -66,7 +66,18 @@ export default function Hero() {
         gsap.set(m, { display: "flex" });
         if (!reduce) {
           gsap.fromTo(m, { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.8, ease: "expo.inOut" });
-          gsap.fromTo(m.querySelectorAll("nav a"), { yPercent: 110 }, { yPercent: 0, duration: 1, stagger: 0.06, delay: 0.3 });
+          gsap.fromTo(
+            m.querySelectorAll("nav a"),
+            { yPercent: 100, clipPath: "inset(0% -10% 100% -10%)" },
+            {
+              yPercent: 0,
+              clipPath: "inset(-40% -10% -60% -10%)",
+              duration: 1,
+              stagger: 0.06,
+              delay: 0.3,
+              clearProps: "clipPath",
+            }
+          );
         }
         m.querySelector<HTMLElement>("nav a")?.focus({ preventScroll: true });
       } else if (m.style.display === "flex") {

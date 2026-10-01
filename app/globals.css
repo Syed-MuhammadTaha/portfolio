@@ -406,9 +406,10 @@ img {
 .menu nav ul {
   list-style: none;
 }
+/* No clipping box on the rows: the slide-in mask lives on the link itself (Hero.tsx) and is removed
+   once it lands, so tall caps and italic descenders (the f in "far", the y in "say") always show. */
 .menu nav li {
-  overflow: clip;
-  padding: 0.12em 0 0.18em;
+  padding: 0.06em 0;
 }
 .menu nav a {
   display: inline-block;
