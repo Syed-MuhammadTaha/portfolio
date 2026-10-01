@@ -12,7 +12,7 @@ export const profile = {
   resume: "/resume.pdf",
   academicCv: "/cv-academic.pdf",
   heroBlurb:
-    "AI engineer & researcher. Building robust agent harnesses with memory and context, and researching efficient AI and agents for resource-constrained domains.",
+    "AI engineer & researcher. Building agent harnesses with memory and context. Researching efficient agents for resource-constrained domains.",
   heroTag: ["Building agent verticals", "that don’t fail you ↘"],
   status: "Open to graduate research positions and AI engineering roles.",
 };
