@@ -1,58 +1,119 @@
-import React from "react";
-import LavaLamp from "@/components/LavaLamp";
-import emailjs from 'emailjs-com';
-import { ToastContainer, toast } from 'react-toastify';
+"use client";
 
-export function Contact() {
+import { useEffect, useRef } from "react";
+import { links, profile } from "@/lib/content";
+import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
+import CodeLink from "@/components/CodeLink";
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    const service = process.env.NEXT_PUBLIC_SERVICE_ID;
-    const template = process.env.NEXT_PUBLIC_TEMPLATE_ID;
-    const user = process.env.NEXT_PUBLIC_USER_ID;
-    event.preventDefault();
-    emailjs.sendForm(
-      service as string,
-      template as string,
-      event.target as HTMLFormElement,
-      user as string
-    ).then(() => {
-      toast.success('Email sent successfully!');
-    }).catch(() => {
-      toast.error('Failed to send email, please try again later.');
+const FRAMES = 5;
+
+/**
+ * Closing section. The word "stop." boils like hand-drawn ink (stepped turbulence frames, after
+ * Aceternity's squiggly text) and goes perfectly still while you hover it.
+ */
+export default function Contact() {
+  const root = useRef<HTMLElement>(null);
+  const squig = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const el = squig.current;
+    if (!el || reducedMotion()) return;
+    let frame = 0, timer: ReturnType<typeof setInterval> | null = null, visible = false, held = false;
+    const run = () => {
+      if (timer || held || !visible) return;
+      timer = setInterval(() => {
+        frame = (frame + 1) % FRAMES;
+        el.style.filter = `url(#sq${frame})`;
+      }, 80);
+    };
+    const halt = () => {
+      if (timer) clearInterval(timer);
+      timer = null;
+      el.style.filter = "none";
+    };
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      if (visible) run();
+      else halt();
     });
-  };
+    io.observe(el);
+    const enter = () => {
+      held = true;
+      halt();
+    };
+    const leave = () => {
+      held = false;
+      run();
+    };
+    el.addEventListener("pointerenter", enter);
+    el.addEventListener("pointerleave", leave);
+    return () => {
+      halt();
+      io.disconnect();
+      el.removeEventListener("pointerenter", enter);
+      el.removeEventListener("pointerleave", leave);
+    };
+  }, []);
+
+  // The giant name rises out of the floor as you reach the bottom.
+  useGSAP(
+    () => {
+      if (reducedMotion()) return;
+      gsap.from(".giant", {
+        yPercent: 40,
+        ease: "none",
+        scrollTrigger: { trigger: ".giant", start: "top bottom", end: "bottom bottom", scrub: true },
+      });
+    },
+    { scope: root }
+  );
+
   return (
-    <LavaLamp>
-      <ToastContainer
-        position="top-right" // Position of the toast (e.g., 'top-left', 'bottom-center')
-        autoClose={5000} // Time in milliseconds before the toast auto closes
-        hideProgressBar={false} // Whether to show the progress bar
-        newestOnTop={true} // Whether new toasts appear on top
-        closeButton={false} // Whether to show the close button
-        theme="dark" // You can set the theme to "light" or "dark"
-        pauseOnHover // Pause toast on hover
-        draggable // Allow dragging the toast
-      />
-      <div className="absolute z-50 inset-0 flex items-center justify-center text-white mx-8">
+    <footer ref={root} id="contact" aria-labelledby="contact-title">
+      <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
+        {Array.from({ length: FRAMES }, (_, i) => (
+          <filter key={i} id={`sq${i}`}>
+            <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves={3} seed={i * 7 + 3} result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale={7} xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        ))}
+      </svg>
 
-        <div className="p-10 mx-auto max-w-xl backdrop-blur-md bg-black/60 rounded-xl">
-          <h1 className="text-3xl font-bold text-center mb-4 text-neutral-400">Lets <span className="text-primary">Connect</span>!</h1>
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            <input type='text' placeholder='Name'
-              className="w-full rounded-sm p-4 bg-neutral-900 focus:border-black text-sm outline-none transition-all" name="user_name" />
-            <input type='email' placeholder='Email'
-              className="w-full rounded-sm p-4 bg-neutral-900 focus:border-black text-sm outline-none transition-all" name="email" />
-            <input type='text' placeholder='Subject'
-              className="w-full rounded-sm p-4 bg-neutral-900 focus:border-black text-sm outline-none transition-all" name="subject" />
-            <textarea placeholder='Message' rows={4} className="w-full bg-neutral-900 rounded-sm text-sm px-4 pt-3 outline-none transition-all mb-5" name="message" ></textarea>
-            <button type='submit' className="text-secondary border border-secondary tracking-wide text-sm font-bold rounded-sm p-4 w-full outline-none mt-4 hover:bg-secondary hover:text-black">SEND</button>
-          </form>
+      <div className="wrap outro">
+        <div>
+          <h2 id="contact-title">
+            Let’s build something
+            <br />
+            that knows when to{" "}
+            <span ref={squig} className="squig">
+              stop.
+            </span>
+          </h2>
+          <p className="small">
+            {profile.status} Email is fastest — <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          </p>
         </div>
-
+        <nav className="linkcols" aria-label="Footer">
+          <ul>
+            <li><CodeLink href="#top">Home</CodeLink></li>
+            <li><CodeLink href="#work">Experience</CodeLink></li>
+            <li><CodeLink href="#research">Research</CodeLink></li>
+            <li><CodeLink href={profile.resume}>Résumé</CodeLink></li>
+          </ul>
+          <ul>
+            <li><CodeLink href={links.github}>GitHub</CodeLink></li>
+            <li><CodeLink href={links.linkedin}>LinkedIn</CodeLink></li>
+            <li><CodeLink href={links.medium}>Medium</CodeLink></li>
+          </ul>
+          <ul>
+            <li><CodeLink href={`mailto:${profile.email}`}>Email</CodeLink></li>
+          </ul>
+        </nav>
       </div>
-
-    </LavaLamp>
+      <div className="giant" aria-hidden="true">
+        Syed Taha
+      </div>
+      <span className="legal mono">© {new Date().getFullYear()} · All rights reserved</span>
+    </footer>
   );
 }
-
-export default Contact;
