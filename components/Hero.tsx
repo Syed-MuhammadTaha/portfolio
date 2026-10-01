@@ -110,7 +110,7 @@ export default function Hero() {
         </div>
         <div className="topbar">
           <a href="#top" className="mark" aria-label="Syed Taha, back to top">
-            <Logo size={64} title="" aria-hidden="true" />
+            <Logo size={36} title="" aria-hidden="true" />
           </a>
           <button
             ref={openBtn}
@@ -193,6 +193,7 @@ export default function Hero() {
         </nav>
         <div className="menu-foot">
           <CodeLink href={profile.resume}>Résumé</CodeLink>
+          <CodeLink href={profile.academicCv}>Academic CV</CodeLink>
           <CodeLink href={links.github}>GitHub</CodeLink>
           <CodeLink href={links.linkedin}>LinkedIn</CodeLink>
           <CodeLink href={`mailto:${profile.email}`}>Email</CodeLink>

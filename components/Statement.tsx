@@ -41,7 +41,6 @@ export default function Statement() {
   return (
     <div className="wrap statement">
       <div>
-        <span className="sq" aria-hidden="true" />
         <p className="small">{statement.aside}</p>
         <CodeLink href="#work">About</CodeLink>
       </div>

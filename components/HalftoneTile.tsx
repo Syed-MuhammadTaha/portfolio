@@ -30,26 +30,26 @@ const fields: Record<Field, (x: number, y: number) => number> = {
     const beam = x > 0.34 && x < 0.8 && Math.abs(y - 0.5) < 0.06 * (1 - (x - 0.34) / 0.5) ? 0.45 : 0;
     return Math.min(1, teacher * 0.9 + student + beam);
   },
-  // Branching reasoning steps, pruned as they deepen.
-  agent(x, y) {
-    let v = 0;
-    const branch = (px: number, py: number, ang: number, len: number, depth: number) => {
-      if (depth > 3) return;
-      const ex = px + Math.cos(ang) * len, ey = py + Math.sin(ang) * len;
-      const t = Math.max(0, Math.min(1, ((x - px) * (ex - px) + (y - py) * (ey - py)) / (len * len)));
-      const dd = Math.hypot(x - (px + (ex - px) * t), y - (py + (ey - py) * t));
-      // Strokes thin out and fade with depth, so the tips stay light.
-      const weight = 1 - depth * 0.22;
-      v = Math.max(v, Math.max(0, 1 - dd / (0.034 - depth * 0.006)) * weight);
-      v = Math.max(v, Math.max(0, 1 - Math.hypot(x - ex, y - ey) / (0.042 - depth * 0.008)) * weight);
-      // Only some branches continue: the rest are pruned.
-      if (depth === 0 || (depth + Math.floor(ex * 10)) % 2 === 0) {
-        branch(ex, ey, ang - 0.45, len * 0.7, depth + 1);
-        branch(ex, ey, ang + 0.4, len * 0.7, depth + 1);
-      }
-    };
-    branch(0.1, 0.5, 0, 0.3, 0);
-    return v;
+  // An abstract whole-slide image: an irregular section of tissue, denser where glands cluster,
+  // with a faint grid of the patches it is cut into for the model.
+  rouge(x, y) {
+    const cx = 0.5, cy = 0.5;
+    const a = Math.atan2(y - cy, x - cx);
+    // A wide, softly lobed section (like a tissue slice on glass), no single peak.
+    const edge = 0.4 + 0.035 * Math.sin(a * 2 + 1.1) + 0.03 * Math.sin(a * 5 + 0.3) + 0.018 * Math.sin(a * 11 + 2);
+    const d = Math.hypot((x - cx) * 0.9, (y - cy) * 1.55);
+    if (d > edge) return 0;
+    // Gland-like clusters: small soft blobs of denser tissue, scattered through the section.
+    const glands: [number, number, number][] = [
+      [0.24, 0.47, 0.05], [0.36, 0.38, 0.06], [0.42, 0.58, 0.05], [0.53, 0.44, 0.07],
+      [0.64, 0.6, 0.05], [0.7, 0.4, 0.055], [0.8, 0.52, 0.045],
+    ];
+    let g = 0;
+    for (const [gx, gy, r] of glands) g = Math.max(g, 1 - Math.hypot(x - gx, y - gy) / r);
+    // Patch grid: thin lines every 1/6 of the tile thin the tissue slightly.
+    const gridLine = (v: number) => Math.min(v * 6 % 1, 1 - (v * 6 % 1)) < 0.11;
+    const base = 0.22 + 0.78 * Math.max(0, g);
+    return gridLine(x) || gridLine(y) ? 0.04 : base;
   },
 };
 

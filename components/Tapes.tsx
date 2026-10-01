@@ -1,12 +1,11 @@
 "use client";
 
 import { useRef } from "react";
-import { tapeWords } from "@/lib/content";
+import { tapes } from "@/lib/content";
 import { gsap, ScrollTrigger, useGSAP, reducedMotion } from "@/lib/gsap";
 
-const run = Array.from({ length: 6 }, () => tapeWords).flat();
 
-/** Three crossing tapes that drift; fast scrolling briefly speeds them up, then they ease back. */
+/** Skills as three crossing tapes (engineering, research, shared stack) that drift; fast scrolling briefly speeds them up, then they ease back. */
 export default function Tapes() {
   const root = useRef<HTMLDivElement>(null);
 
@@ -39,22 +38,27 @@ export default function Tapes() {
 
   return (
     <div ref={root} className="tapes" aria-hidden="true">
-      {[
-        ["t1", "-1"],
-        ["t2", "1"],
-        ["t3", "-1"],
-      ].map(([cls, dir]) => (
-        <div key={cls} className={`tape ${cls}`}>
-          <div className="run" data-dir={dir}>
-            {run.map((w, i) => (
-              <span key={i}>
-                <i className="sq" />
-                {w}
-              </span>
-            ))}
+      {tapes.map((t, i) => {
+        // Repeat the label + words enough times to fill the loop seamlessly.
+        const reps = Math.max(2, Math.ceil(24 / (t.words.length + 1)));
+        return (
+          <div key={t.label} className={`tape t${i + 1}`}>
+            <div className="run" data-dir={i % 2 ? "1" : "-1"}>
+              {Array.from({ length: reps * 2 }, (_, r) => (
+                <span key={r} className="seq">
+                  <span className="lbl">{t.label}</span>
+                  {t.words.map((w) => (
+                    <span key={w}>
+                      <i className="sq" />
+                      {w}
+                    </span>
+                  ))}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

@@ -1,17 +1,30 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { industry, research, type Role } from "@/lib/content";
+import { engineering, profile, research, type Role } from "@/lib/content";
+import CodeLink from "@/components/CodeLink";
 import { gsap, useGSAP, finePointer } from "@/lib/gsap";
 
-type Track = "Industry" | "Research";
-const tracks: { key: Track; n: string; roles: Role[] }[] = [
-  { key: "Industry", n: "01", roles: industry },
-  { key: "Research", n: "02", roles: research },
+type Track = "Engineering" | "Research";
+/** Render a point, setting **figures** in bold. */
+function Point({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/(\*\*[^*]+\*\*)/).map((part, i) =>
+        part.startsWith("**") ? <b key={i}>{part.slice(2, -2)}</b> : <span key={i}>{part}</span>
+      )}
+    </>
+  );
+}
+const plain = (t: string) => t.replace(/\*\*/g, "");
+
+const tracks: { key: Track; n: string; roles: Role[]; cv: { href: string; label: string } }[] = [
+  { key: "Engineering", n: "01", roles: engineering, cv: { href: profile.resume, label: "Résumé" } },
+  { key: "Research", n: "02", roles: research, cv: { href: profile.academicCv, label: "Academic CV" } },
 ];
 
 /**
- * Industry and research as two separate tables. On desktop, hovering a row brings up a typeset
+ * Engineering and research as two separate tables. On desktop, hovering a row brings up a typeset
  * detail card that trails the cursor inside that table; on touch, each row shows its first point.
  */
 export default function Experience() {
@@ -73,8 +86,7 @@ export default function Experience() {
           Experience
         </h2>
         <p className="small" data-reveal>
-          Two tracks, run in parallel: production AI for real users, and research on how little compute a model really
-          needs. Hover a row for the detail.
+          Hover a row for the detail.
         </p>
       </div>
 
@@ -85,7 +97,9 @@ export default function Experience() {
               {`{ ${t.n} }`}
             </span>
             <h3>{t.key}</h3>
-            <span className="mono count">{t.roles.length} roles</span>
+            <CodeLink className="count" href={t.cv.href}>
+              {t.cv.label} ↓
+            </CodeLink>
           </div>
           <ul className="rows" onPointerEnter={show} onPointerLeave={hide} onPointerMove={place}>
             {t.roles.map((r, i) => (
@@ -95,7 +109,7 @@ export default function Experience() {
                 tabIndex={0}
                 data-reveal
                 onPointerEnter={() => finePointer() && setActive({ track: t.key, role: r })}
-                aria-label={`${r.org} ${r.orgItalic ?? ""}, ${r.role}, ${r.when}. ${r.points.join(" ")}`}
+                aria-label={`${r.org} ${r.orgItalic ?? ""}, ${r.role}, ${r.when}. ${r.points.map(plain).join(". ")}`}
               >
                 <span className="n">{String(i + 1).padStart(2, "0")}</span>
                 <span className="org">
@@ -103,7 +117,7 @@ export default function Experience() {
                 </span>
                 <span className="rl">{r.role}</span>
                 <span className="when">{r.when}</span>
-                <span className="detail">{r.points[0]}</span>
+                <span className="detail"><Point text={r.points[0]} /></span>
               </li>
             ))}
           </ul>
@@ -125,7 +139,9 @@ export default function Experience() {
             <ul className="peek-pts">
               {active.role.points.map((p) => (
                 <li key={p}>
-                  <span>{p}</span>
+                  <span>
+                    <Point text={p} />
+                  </span>
                 </li>
               ))}
             </ul>

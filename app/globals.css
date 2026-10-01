@@ -110,18 +110,15 @@ img {
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
-/* ■■ marker */
+/* Marker: a small four-point spark (after the star in the Pamore mark). */
 .sq {
-  display: inline-flex;
-  gap: 3px;
+  display: inline-block;
+  width: 9px;
+  height: 9px;
   vertical-align: middle;
-}
-.sq::before,
-.sq::after {
-  content: "";
-  width: 7px;
-  height: 7px;
   background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M5 0C5.5 3.3 6.7 4.5 10 5C6.7 5.5 5.5 6.7 5 10C4.5 6.7 3.3 5.5 0 5C3.3 4.5 4.5 3.3 5 0Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M5 0C5.5 3.3 6.7 4.5 10 5C6.7 5.5 5.5 6.7 5 10C4.5 6.7 3.3 5.5 0 5C3.3 4.5 4.5 3.3 5 0Z'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 /* Code-style link: { label }. Hover: braces ease apart, a line strikes through the label. */
@@ -410,7 +407,7 @@ img {
   list-style: none;
 }
 .menu nav li {
-  overflow: hidden;
+  overflow: clip;
   padding: 0.12em 0 0.18em;
 }
 .menu nav a {
@@ -430,6 +427,13 @@ img {
 .menu nav a:hover em,
 .menu nav a:focus-visible em {
   color: var(--snow);
+}
+/* Inside the clipped rows an outline would be cut into a stray line; mark keyboard focus with an underline instead. */
+.menu nav a:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.12em;
 }
 .menu-foot {
   display: flex;
@@ -469,6 +473,15 @@ img {
   display: flex;
   white-space: nowrap;
   will-change: transform;
+}
+.tape .run .seq {
+  display: inline-flex;
+  padding: 0;
+  gap: 0;
+  border: 0;
+}
+.tape .run .lbl {
+  font-weight: 600;
 }
 .tape .run span {
   display: inline-flex;
@@ -618,7 +631,7 @@ img {
   left: 0;
   top: 0;
   z-index: 40;
-  width: 380px;
+  width: 400px;
   padding: 22px 22px 18px;
   color: var(--snow);
   pointer-events: none;
@@ -627,7 +640,8 @@ img {
   border-radius: 4px;
 }
 .peek.glass {
-  background: rgba(28, 28, 27, 0.5);
+  /* Dark enough that the bright hovered row behind never washes out the text. */
+  background: rgba(24, 24, 23, 0.78);
   -webkit-backdrop-filter: blur(26px) saturate(1.05);
   backdrop-filter: blur(26px) saturate(1.05);
 }
@@ -673,11 +687,17 @@ img {
 .peek-pts li {
   display: grid;
   grid-template-columns: 16px 1fr;
-  font-size: 13.5px;
-  line-height: 1.42;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #cfcdc8;
+}
+.peek-pts b,
+.row .detail b {
+  color: var(--snow);
+  font-weight: 600;
 }
 .peek-pts li::before {
-  content: "—";
+  content: "–";
   color: var(--fog);
 }
 .peek-tags {
@@ -870,10 +890,6 @@ img {
    Small screens
    ========================================================================== */
 @media (max-width: 800px) {
-  .topbar .mark svg {
-    width: 44px;
-    height: 44px;
-  }
   .cols {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;

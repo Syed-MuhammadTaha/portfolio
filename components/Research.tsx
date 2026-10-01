@@ -92,10 +92,11 @@ export default function Research() {
                 {p.authors.map((a, i) => (
                   <span key={a}>
                     {i > 0 && ", "}
-                    {a === "Imam" ? <b>{a}</b> : a}
+                    {a === "Taha" ? <b>{a}</b> : a}
                   </span>
-                ))}{" "}
-                — {p.venue}
+                ))}
+                {p.authors.length > 0 && ", "}
+                {p.venue}
               </p>
             </div>
             {p.href ? (

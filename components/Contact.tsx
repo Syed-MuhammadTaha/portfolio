@@ -90,7 +90,7 @@ export default function Contact() {
             </span>
           </h2>
           <p className="small">
-            {profile.status} Email is fastest — <a href={`mailto:${profile.email}`}>{profile.email}</a>
+            {profile.status} Email is fastest at <a href={`mailto:${profile.email}`}>{profile.email}</a>
           </p>
         </div>
         <nav className="linkcols" aria-label="Footer">
@@ -99,6 +99,7 @@ export default function Contact() {
             <li><CodeLink href="#work">Experience</CodeLink></li>
             <li><CodeLink href="#research">Research</CodeLink></li>
             <li><CodeLink href={profile.resume}>Résumé</CodeLink></li>
+            <li><CodeLink href={profile.academicCv}>Academic CV</CodeLink></li>
           </ul>
           <ul>
             <li><CodeLink href={links.github}>GitHub</CodeLink></li>
