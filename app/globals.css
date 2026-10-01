@@ -828,6 +828,121 @@ img {
   color: var(--fog);
 }
 
+/* Projects: a terminal list */
+.proj {
+  padding: 40px 0 120px;
+}
+.proj-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: end;
+  margin-bottom: 60px;
+}
+/* Same scale as the Research heading, so it reads as a sibling section. */
+.proj-head h2 {
+  font-size: clamp(30px, 3.4vw, 52px);
+  line-height: 1.04;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+.proj-head h2 em {
+  font-family: var(--font-serif), serif;
+  font-style: italic;
+  text-transform: none;
+}
+.proj-head .small {
+  justify-self: end;
+}
+.proj-list {
+  list-style: none;
+  border-top: 1px solid var(--snow);
+}
+.prow {
+  display: grid;
+  grid-template-columns: 70px 1fr auto;
+  gap: 14px 20px;
+  align-items: baseline;
+  padding: 26px 10px;
+  border-bottom: 1px solid var(--rule-dark);
+}
+.prow .n {
+  font-size: 22px;
+  color: var(--fog);
+  transition: color 0.3s;
+}
+.prow h3 {
+  font-family: var(--font-serif), serif;
+  font-variation-settings: "opsz" 96;
+  font-weight: 400;
+  font-size: clamp(30px, 3.4vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  transition: transform 0.7s var(--ease);
+}
+.prow:hover h3,
+.prow:focus-within h3 {
+  transform: translateX(10px);
+}
+.prow:hover .n,
+.prow:focus-within .n {
+  color: var(--snow);
+}
+.prow .shell {
+  grid-column: 2 / -1;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.6s var(--ease);
+}
+.prow:hover .shell,
+.prow:focus-within .shell {
+  grid-template-rows: 1fr;
+}
+.shell > div {
+  overflow: hidden;
+}
+.shell .line {
+  margin-top: 16px;
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  color: #cfcdc8;
+  min-height: 1.5em;
+}
+.shell .typed {
+  white-space: pre;
+}
+.shell .line .p {
+  color: var(--fog);
+  margin-right: 10px;
+}
+.shell .cur {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  margin-left: 2px;
+  vertical-align: -2px;
+  background: var(--snow);
+  animation: blink 1s steps(2) infinite;
+}
+.shell .sum {
+  margin-top: 10px;
+  max-width: 62ch;
+  color: var(--fog);
+  font-size: 14px;
+}
+.shell .tags {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.shell .tags span {
+  border: 1px solid #333;
+  padding: 3px 7px;
+  font-size: 10px;
+  color: #cfcdc8;
+}
+
 /* Contact */
 .outro {
   padding: 140px 0 0;
@@ -958,6 +1073,22 @@ img {
   }
   .tiles {
     grid-template-columns: 1fr 1fr;
+  }
+  .proj-head {
+    grid-template-columns: 1fr;
+  }
+  .proj-head .small {
+    justify-self: start;
+  }
+  .prow {
+    grid-template-columns: 1fr auto;
+  }
+  .prow .n {
+    display: none;
+  }
+  .prow .shell {
+    grid-column: 1 / -1;
+    grid-template-rows: 1fr;
   }
   .metric + .metric {
     border-left: 0;

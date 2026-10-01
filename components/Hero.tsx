@@ -14,6 +14,7 @@ import { playIntro, INTRO_DELAY } from "@/lib/intro";
 const menuItems = [
   { href: "#work", label: "Experience", em: "two tracks" },
   { href: "#research", label: "Research", em: "so far" },
+  { href: "#projects", label: "Projects", em: "built" },
   { href: "#contact", label: "Contact", em: "say hi" },
 ];
 

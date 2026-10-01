@@ -8,7 +8,7 @@ import CodeLink from "@/components/CodeLink";
 const FRAMES = 5;
 
 /**
- * Closing section. The word "stop." boils like hand-drawn ink (stepped turbulence frames, after
+ * Closing section. The word "talk." boils like hand-drawn ink (stepped turbulence frames, after
  * Aceternity's squiggly text) and goes perfectly still while you hover it.
  */
 export default function Contact() {
@@ -82,15 +82,16 @@ export default function Contact() {
       <div className="wrap outro">
         <div>
           <h2 id="contact-title">
-            Let’s build something
+            Building agents worth trusting?
             <br />
-            that knows when to{" "}
+            Let’s{" "}
             <span ref={squig} className="squig">
-              stop.
+              talk.
             </span>
           </h2>
           <p className="small">
-            {profile.status} Email is fastest at <a href={`mailto:${profile.email}`}>{profile.email}</a>
+            Open to collaborating on vertical agent startups, and to joining research groups working on agentic AI.
+            Reach me at <a href={`mailto:${profile.email}`}>{profile.email}</a>
           </p>
         </div>
         <nav className="linkcols" aria-label="Footer">
@@ -98,6 +99,7 @@ export default function Contact() {
             <li><CodeLink href="#top">Home</CodeLink></li>
             <li><CodeLink href="#work">Experience</CodeLink></li>
             <li><CodeLink href="#research">Research</CodeLink></li>
+            <li><CodeLink href="#projects">Projects</CodeLink></li>
             <li><CodeLink href={profile.resume}>Résumé</CodeLink></li>
             <li><CodeLink href={profile.academicCv}>Academic CV</CodeLink></li>
           </ul>
