@@ -245,9 +245,6 @@ export type Project = {
   /** Second part of the name, set in italic. */
   nameItalic?: string;
   repo: string;
-  /** The line typed out on hover, as a command and its result. */
-  command: string;
-  result: string;
   summary: string;
   stack: string[];
 };
@@ -258,8 +255,6 @@ export const projects: Project[] = [
   {
     name: "create-rag-app",
     repo: GITHUB + "create-rag-app",
-    command: "$ create-rag-app",
-    result: "scaffolding FastAPI + Streamlit + Qdrant, Dockerized",
     summary:
       "A Python CLI that scaffolds production-ready, Dockerized RAG apps from 13 Jinja2 templates, with 3 retrieval strategies and 8+ integrations.",
     stack: ["Python", "Typer", "Docker", "FastAPI", "Streamlit", "Qdrant", "LangChain"],
@@ -268,8 +263,6 @@ export const projects: Project[] = [
     name: "Bare-metal",
     nameItalic: "Prospector",
     repo: GITHUB + "baremetal-prospector-agent",
-    command: "> thought → action → observation",
-    result: "tool call parsed, hallucinated call healed",
     summary:
       "A framework-free SDR agent on a raw Python ReAct loop, with a syntax-directed parser that heals tool hallucinations and a three-tier memory.",
     stack: ["Python", "Jina Embeddings", "OpenAI / Groq", "Streamlit", "uv"],
@@ -278,8 +271,6 @@ export const projects: Project[] = [
     name: "GPT-2",
     nameItalic: "from scratch",
     repo: GITHUB + "gpt-2",
-    command: "$ python train.py",
-    result: "FineWeb-Edu, 10B tokens, FlashAttention",
     summary:
       "Pretrained GPT-2 from scratch in PyTorch, sped up inference with KV caching and speculative decoding, and instruction-tuned it on Alpaca.",
     stack: ["PyTorch", "FlashAttention", "KV cache", "Speculative decoding", "SFT"],
@@ -288,8 +279,6 @@ export const projects: Project[] = [
     name: "Agentic",
     nameItalic: "RAG",
     repo: GITHUB + "agentic-rag",
-    command: "> plan → retrieve → replan",
-    result: "RAGAS faithfulness above 0.95",
     summary: "A LangGraph planner and re-planner agent for retrieval, evaluated with RAGAS at over 95% faithfulness.",
     stack: ["LangGraph", "RAGAS", "LangChain", "Python"],
   },

@@ -2,83 +2,82 @@
 
 import { useRef } from "react";
 import { projects } from "@/lib/content";
-import { reducedMotion } from "@/lib/gsap";
+import { useGSAP, ScrollTrigger } from "@/lib/gsap";
 import CodeLink from "@/components/CodeLink";
+import ProjectArt from "@/components/ProjectArt";
+
+const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
- * Selected projects as a terminal list. Hovering (or focusing) a project opens it and types out
- * a command and its result, with a blinking cursor; the summary and stack sit underneath.
+ * Selected projects beside a fixed piece: the spinning donut in the site's dot matrix stays pinned on
+ * the right while the projects arrive one by one on the left. The project in focus is lit, the
+ * others rest dimmed.
  */
 export default function Projects() {
-  const timers = useRef(new Map<number, ReturnType<typeof setInterval>>());
+  const root = useRef<HTMLElement>(null);
 
-  const type = (i: number, el: HTMLElement | null) => {
-    if (!el) return;
-    const p = projects[i];
-    const full = `${p.command}   ${p.result}`;
-    clearInterval(timers.current.get(i));
-    if (reducedMotion()) {
-      el.textContent = full;
-      return;
-    }
-    let k = 0;
-    el.textContent = "";
-    timers.current.set(
-      i,
-      setInterval(() => {
-        el.textContent = full.slice(0, ++k);
-        if (k >= full.length) clearInterval(timers.current.get(i));
-      }, 18)
-    );
-  };
+  useGSAP(
+    () => {
+      const steps = root.current?.querySelector<HTMLElement>(".proj-steps");
+      if (!steps) return;
+      const rows = Array.from(steps.querySelectorAll<HTMLElement>(".pstep"));
+      const n = rows.length;
+      // A step's centre crossing the focus line maps to whole numbers: 0 for the first, n - 1 for the last.
+      ScrollTrigger.create({
+        trigger: steps,
+        start: "top 55%",
+        end: "bottom 55%",
+        onUpdate: (st) => {
+          const i = Math.round(Math.max(0, Math.min(n - 1, st.progress * n - 0.5)));
+          rows.forEach((r, k) => r.classList.toggle("on", k === i));
+        },
+        onEnter: () => rows[0].classList.add("on"),
+      });
+    },
+    { scope: root }
+  );
 
   return (
-    <section id="projects" className="wrap proj" aria-labelledby="proj-title">
+    <section ref={root} id="projects" className="wrap proj" aria-labelledby="proj-title">
       <div className="proj-head">
         <h2 id="proj-title" data-split>
           Selected <em>projects</em>
         </h2>
-        <p className="small" data-reveal>
-          Hover a project to run it.
-        </p>
       </div>
 
-      <ul className="proj-list">
-        {projects.map((p, i) => (
-          <li
-            key={p.name}
-            className="prow"
-            data-reveal
-            onPointerEnter={(e) => type(i, e.currentTarget.querySelector(".typed"))}
-            onFocus={(e) => type(i, e.currentTarget.querySelector(".typed"))}
-          >
-            <span className="n dot" aria-hidden="true">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <h3>
-              {p.name} {p.nameItalic && <em>{p.nameItalic}</em>}
-            </h3>
-            <CodeLink href={p.repo}>GitHub ↗</CodeLink>
-            <div className="shell">
-              <div>
-                <p className="line" aria-hidden="true">
-                  <span className="p">~</span>
-                  <span className="typed">
-                    {p.command}   {p.result}
-                  </span>
-                  <span className="cur" />
-                </p>
+      <div className="proj-stage">
+        <ol className="proj-steps">
+          {projects.map((p, i) => (
+            <li key={p.name} className="pstep">
+              <div className="pstep-in">
+                <span className="cap mono">
+                  <span className="sq" aria-hidden="true" />
+                  {`{ ${pad(i + 1)} / ${pad(projects.length)} }`}
+                </span>
+                <h3>
+                  {p.name} {p.nameItalic && <em>{p.nameItalic}</em>}
+                </h3>
                 <p className="sum">{p.summary}</p>
-                <div className="tags mono">
-                  {p.stack.map((s) => (
-                    <span key={s}>{s}</span>
-                  ))}
+                <div className="pfoot">
+                  <div className="tags mono">
+                    {p.stack.map((s) => (
+                      <span key={s}>{s}</span>
+                    ))}
+                  </div>
+                  <CodeLink href={p.repo}>GitHub ↗</CodeLink>
                 </div>
               </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ol>
+
+        <div className="proj-art" aria-hidden="true">
+          <div className="proj-art-in">
+            <ProjectArt label="" />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
+

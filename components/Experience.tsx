@@ -25,12 +25,14 @@ const tracks: { key: Track; n: string; roles: Role[]; cv: { href: string; label:
 
 /**
  * Engineering and research as two separate tables. On desktop, hovering a row brings up a typeset
- * detail card that trails the cursor inside that table; on touch, each row shows its first point.
+ * detail card that trails the cursor inside that table; on touch, tapping a row opens the same detail
+ * as a frosted panel under the row, one row at a time.
  */
 export default function Experience() {
   const root = useRef<HTMLElement>(null);
   const peek = useRef<HTMLElement>(null);
   const [active, setActive] = useState<{ track: Track; role: Role } | null>(null);
+  const [open, setOpen] = useState<string | null>(null);
 
   // Card position follows the pointer with a little lag; flips sides near the viewport edge.
   const { contextSafe } = useGSAP(
@@ -86,7 +88,8 @@ export default function Experience() {
           Experience
         </h2>
         <p className="small" data-reveal>
-          Hover a row for the detail.
+          <span className="on-hover">Hover a row for the detail.</span>
+          <span className="on-touch">Click a row for the detail.</span>
         </p>
       </div>
 
@@ -105,10 +108,12 @@ export default function Experience() {
             {t.roles.map((r, i) => (
               <li
                 key={r.org + r.when}
-                className="row"
+                className={`row${open === r.org + r.when ? " open" : ""}`}
                 tabIndex={0}
                 data-reveal
+                aria-expanded={finePointer() ? undefined : open === r.org + r.when}
                 onPointerEnter={() => finePointer() && setActive({ track: t.key, role: r })}
+                onClick={() => !finePointer() && setOpen((o) => (o === r.org + r.when ? null : r.org + r.when))}
                 aria-label={`${r.org} ${r.orgItalic ?? ""}, ${r.role}, ${r.when}. ${r.points.map(plain).join(". ")}`}
               >
                 <span className="n">{String(i + 1).padStart(2, "0")}</span>
@@ -117,7 +122,28 @@ export default function Experience() {
                 </span>
                 <span className="rl">{r.role}</span>
                 <span className="when">{r.when}</span>
-                <span className="detail"><Point text={r.points[0]} /></span>
+                <span className="pm" aria-hidden="true" />
+                <span className="detail">
+                  <span>
+                    <span className="dglass glass">
+                      <i className="peek-tick" />
+                      <ul className="peek-pts">
+                        {r.points.map((p) => (
+                          <li key={p}>
+                            <span>
+                              <Point text={p} />
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                      <span className="peek-tags mono">
+                        {r.tags.map((tag) => (
+                          <span key={tag}>{tag}</span>
+                        ))}
+                      </span>
+                    </span>
+                  </span>
+                </span>
               </li>
             ))}
           </ul>
