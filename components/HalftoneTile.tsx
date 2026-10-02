@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import type { Field } from "@/lib/content";
 import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
+import { unlitGrid } from "@/lib/dots";
 
 /** Grid: N × N dots per tile. */
 const N = 30;
@@ -70,7 +71,7 @@ export default function HalftoneTile({ field, label }: { field: Field; label: st
     // Sample once: value at each dot centre.
     const vals = Array.from({ length: N * N }, (_, k) => f(((k % N) + 0.5) / N, (Math.floor(k / N) + 0.5) / N));
     const state = { progress: reducedMotion() ? 1 : 0, lens: 0, lx: -999, ly: -999 };
-    let w = 0;
+    let w = 0, grid: HTMLCanvasElement | null = null, queued = 0;
 
     const size = () => {
       const dpr = Math.min(2, devicePixelRatio || 1);
@@ -78,19 +79,14 @@ export default function HalftoneTile({ field, label }: { field: Field; label: st
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(w * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      grid = w ? unlitGrid(N, w, dpr) : null;
     };
     const draw = () => {
+      queued = 0;
       const pitch = w / N, rMax = pitch * 0.46, rMin = pitch * 0.07;
       ctx.clearRect(0, 0, w, w);
-      // Unlit grid first, in one pass.
-      ctx.fillStyle = "rgba(236,235,231,0.14)";
-      ctx.beginPath();
-      for (let k = 0; k < N * N; k++) {
-        const x = ((k % N) + 0.5) * pitch, y = (Math.floor(k / N) + 0.5) * pitch;
-        ctx.moveTo(x + rMin, y);
-        ctx.arc(x, y, rMin, 0, Math.PI * 2);
-      }
-      ctx.fill();
+      // Unlit grid, drawn once per size and stamped.
+      if (grid) ctx.drawImage(grid, 0, 0, w, w);
       // Lit dots: size follows the field; each column grows in as the sweep passes it.
       ctx.fillStyle = "#ecebe7";
       ctx.beginPath();
@@ -124,19 +120,24 @@ export default function HalftoneTile({ field, label }: { field: Field; label: st
       onUpdate: draw,
       scrollTrigger: { trigger: canvas, start: "top 85%", once: true },
     });
+    // The lens follows the pointer at most once per frame; it swells in on entry and out on leave.
+    const queue = () => (queued ||= requestAnimationFrame(draw));
     const move = (e: PointerEvent) => {
       const b = canvas.getBoundingClientRect();
       state.lx = e.clientX - b.left;
       state.ly = e.clientY - b.top;
-      gsap.to(state, { lens: 1, duration: 0.35, overwrite: "auto", onUpdate: draw });
-      draw();
+      queue();
     };
-    const leave = () => gsap.to(state, { lens: 0, duration: 1, overwrite: "auto", onUpdate: draw });
+    const enter = () => gsap.to(state, { lens: 1, duration: 0.35, overwrite: "auto", onUpdate: queue });
+    const leave = () => gsap.to(state, { lens: 0, duration: 1, overwrite: "auto", onUpdate: queue });
     canvas.addEventListener("pointermove", move);
+    canvas.addEventListener("pointerenter", enter);
     canvas.addEventListener("pointerleave", leave);
     return () => {
       ro.disconnect();
+      cancelAnimationFrame(queued);
       canvas.removeEventListener("pointermove", move);
+      canvas.removeEventListener("pointerenter", enter);
       canvas.removeEventListener("pointerleave", leave);
     };
   });

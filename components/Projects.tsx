@@ -22,6 +22,7 @@ export default function Projects() {
       if (!steps) return;
       const rows = Array.from(steps.querySelectorAll<HTMLElement>(".pstep"));
       const n = rows.length;
+      let current = -1;
       // A step's centre crossing the focus line maps to whole numbers: 0 for the first, n - 1 for the last.
       ScrollTrigger.create({
         trigger: steps,
@@ -29,9 +30,10 @@ export default function Projects() {
         end: "bottom 55%",
         onUpdate: (st) => {
           const i = Math.round(Math.max(0, Math.min(n - 1, st.progress * n - 0.5)));
+          if (i === current) return;
+          current = i;
           rows.forEach((r, k) => r.classList.toggle("on", k === i));
         },
-        onEnter: () => rows[0].classList.add("on"),
       });
     },
     { scope: root }
@@ -54,17 +56,17 @@ export default function Projects() {
                   <span className="sq" aria-hidden="true" />
                   {`{ ${pad(i + 1)} / ${pad(projects.length)} }`}
                 </span>
-                <h3>
-                  {p.name} {p.nameItalic && <em>{p.nameItalic}</em>}
-                </h3>
-                <p className="sum">{p.summary}</p>
-                <div className="pfoot">
-                  <div className="tags mono">
-                    {p.stack.map((s) => (
-                      <span key={s}>{s}</span>
-                    ))}
-                  </div>
+                <div className="ptitle">
+                  <h3>
+                    {p.name} {p.nameItalic && <em>{p.nameItalic}</em>}
+                  </h3>
                   <CodeLink href={p.repo}>GitHub ↗</CodeLink>
+                </div>
+                <p className="sum">{p.summary}</p>
+                <div className="pfoot tags mono">
+                  {p.stack.map((s) => (
+                    <span key={s}>{s}</span>
+                  ))}
                 </div>
               </div>
             </li>

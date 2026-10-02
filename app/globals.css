@@ -896,7 +896,6 @@ img {
   font-size: 10.5px;
 }
 .pstep h3 {
-  margin-top: 18px;
   font-size: clamp(26px, 2.4vw, 36px);
   font-weight: 400;
   line-height: 1.08;
@@ -913,26 +912,27 @@ img {
   line-height: 1.55;
   max-width: 46ch;
 }
-.pfoot {
+.ptitle {
   margin-top: 18px;
   display: flex;
   gap: 20px;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
 }
-.pfoot .tags {
+.ptitle .code-link {
+  flex: none;
+}
+.pfoot {
+  margin-top: 18px;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
 }
-.pfoot .tags span {
+.pfoot span {
   border: 1px solid #333;
   padding: 3px 7px;
   font-size: 10px;
   color: #cfcdc8;
-}
-.pfoot .code-link {
-  flex: none;
 }
 .proj-art {
   position: relative;
@@ -1187,6 +1187,9 @@ img {
     border-radius: 4px;
     color: var(--snow);
     background: rgba(255, 255, 255, 0.07);
+    /* Over the plain black section a backdrop blur adds nothing, so skip its cost. */
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
     opacity: 0;
     transform: translateY(-8px);
     transition:

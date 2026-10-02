@@ -16,15 +16,30 @@ export default function Tapes() {
         const left = el.dataset.dir === "-1";
         return gsap.fromTo(el, { xPercent: left ? 0 : -50 }, { xPercent: left ? -50 : 0, duration: 60, ease: "none", repeat: -1 });
       });
-      let settle: gsap.core.Tween | undefined;
-      ScrollTrigger.create({
+      // Scrolling fast speeds the tapes up, then they ease back. One per-frame update eases the
+      // speed toward a target set by scroll velocity, instead of new tweens on every scroll event.
+      let target = 1, speed = 1;
+      const st = ScrollTrigger.create({
         onUpdate(self) {
-          const boost = 1 + gsap.utils.clamp(0, 6, Math.abs(self.getVelocity()) / 300);
-          loops.forEach((l) => gsap.to(l, { timeScale: boost, duration: 0.3, overwrite: true }));
-          settle?.kill();
-          settle = gsap.delayedCall(0.3, () => loops.forEach((l) => gsap.to(l, { timeScale: 1, duration: 1.2, overwrite: true })));
+          target = 1 + gsap.utils.clamp(0, 6, Math.abs(self.getVelocity()) / 300);
         },
       });
+      const tick = () => {
+        target += (1 - target) * 0.04;
+        const next = speed + (target - speed) * 0.12;
+        if (Math.abs(next - speed) < 0.001) return;
+        speed = next;
+        loops.forEach((l) => l.timeScale(speed));
+      };
+      gsap.ticker.add(tick);
+      // Off screen, the tapes stop moving entirely, so they cost nothing while you read elsewhere.
+      const view = ScrollTrigger.create({
+        trigger: root.current,
+        start: "top bottom",
+        end: "bottom top",
+        onToggle: (self) => loops.forEach((l) => l.paused(!self.isActive)),
+      });
+      if (!view.isActive) loops.forEach((l) => l.pause());
       gsap.from(".tape", {
         xPercent: (i) => (i % 2 ? 30 : -30),
         autoAlpha: 0,
@@ -32,6 +47,11 @@ export default function Tapes() {
         stagger: 0.12,
         scrollTrigger: { trigger: root.current, start: "top 85%", once: true },
       });
+      return () => {
+        gsap.ticker.remove(tick);
+        st.kill();
+        view.kill();
+      };
     },
     { scope: root }
   );

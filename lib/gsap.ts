@@ -7,6 +7,9 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 gsap.defaults({ ease: "expo.out" });
+// Phones resize the viewport as the address bar shows and hides; recalculating every trigger then
+// is what makes mobile scrolling hitch.
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 export const reducedMotion = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
