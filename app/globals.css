@@ -1129,10 +1129,16 @@ img {
   z-index: 200;
   display: none;
   place-items: center;
-  background: var(--paper);
   color: var(--ink);
+  pointer-events: none;
+}
+.loader-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
 }
 .loader-inner {
+  position: relative;
   display: grid;
   justify-items: center;
   gap: 18px;

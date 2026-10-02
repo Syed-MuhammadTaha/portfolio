@@ -30,8 +30,9 @@ export default function Hero() {
     () => {
       if (reducedMotion()) return;
       const idx = gsap.utils.toArray<HTMLElement>(".col .idx");
+      const intro = playIntro();
       gsap
-        .timeline({ delay: playIntro() ? INTRO_DELAY : 0 })
+        .timeline({ delay: intro ? INTRO_DELAY : 0 })
         .from(".col", { clipPath: "inset(100% 0 0 0)", duration: 1.4, stagger: 0.1, ease: "expo.inOut" })
         .from(".big .in", { yPercent: 105, duration: 1.4, stagger: 0.12 }, 0.6)
         .add(() => {
@@ -45,7 +46,7 @@ export default function Hero() {
             });
           });
         }, 0.8)
-        .from(".blurb, .col .idx, .topbar, .vert, .hero-tag, .clockbar", { autoAlpha: 0, y: 12, duration: 1, stagger: 0.04 }, 1.1);
+        .from(`.blurb, .col .idx, ${intro ? ".burger" : ".topbar"}, .vert, .hero-tag, .clockbar`, { autoAlpha: 0, y: 12, duration: 1, stagger: 0.04 }, 1.1);
 
       const st = { trigger: root.current, start: "top top", end: "bottom top", scrub: true };
       gsap.to(".portrait", { yPercent: 10, ease: "none", scrollTrigger: st });
@@ -122,7 +123,7 @@ export default function Hero() {
         </div>
         <div className="topbar">
           <a href="#top" className="mark" aria-label="Syed Taha, back to top">
-            <Logo size={36} title="" aria-hidden="true" />
+            <Logo width={84} title="" aria-hidden="true" />
           </a>
           <button
             ref={openBtn}
@@ -185,7 +186,7 @@ export default function Hero() {
 
       <div ref={menuRef} id="menu" className="menu glass" role="dialog" aria-modal="true" aria-label="Menu">
         <div className="menu-top">
-          <span className="mark"><Logo size={30} title="" aria-hidden="true" /></span>
+          <span className="mark"><Logo width={72} title="" aria-hidden="true" /></span>
           <button type="button" className="burger" aria-label="Close menu" onClick={() => setOpen(false)}>
             <i />
             <i style={{ width: 22 }} />

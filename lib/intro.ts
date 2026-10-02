@@ -6,7 +6,7 @@ const KEY = "st-intro-seen";
 let decided: boolean | null = null;
 
 /**
- * Whether the intro (the mark drawing itself) plays on this load: once per browser session, never
+ * Whether the intro (the signature signing itself) plays on this load: once per browser session, never
  * with reduced motion. Decided once so the loader and the hero agree.
  */
 export function playIntro(): boolean {
@@ -22,4 +22,4 @@ export function playIntro(): boolean {
 }
 
 /** Seconds the hero intro waits for the loader to finish. */
-export const INTRO_DELAY = 1.7;
+export const INTRO_DELAY = 2.45;
