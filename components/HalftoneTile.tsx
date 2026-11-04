@@ -3,26 +3,43 @@
 import { useRef } from "react";
 import type { Field } from "@/lib/content";
 import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
-import { unlitGrid } from "@/lib/dots";
+import { unlitGrid, ambientFps } from "@/lib/dots";
 
 /** Grid: N × N dots per tile. */
 const N = 30;
 
+/** Deterministic noise in [0, 1) for a pair of integers. */
+const hash = (a: number, b: number) => {
+  const s = Math.sin(a * 127.1 + b * 311.7) * 43758.5453;
+  return s - Math.floor(s);
+};
+
+/** Distance from (x, y) to the segment a→b. */
+const seg = (x: number, y: number, [ax, ay]: number[], [bx, by]: number[]) => {
+  const dx = bx - ax, dy = by - ay;
+  const t = Math.min(1, Math.max(0, ((x - ax) * dx + (y - ay) * dy) / (dx * dx + dy * dy)));
+  return Math.hypot(x - (ax + t * dx), y - (ay + t * dy));
+};
+
+/** A left curly brace as a polyline, centred on x = 0, from y = 0.12 to 0.88. */
+const BRACE = [
+  [0.1, 0.12], [0.03, 0.14], [0, 0.2], [0, 0.42], [-0.03, 0.48], [-0.08, 0.5],
+  [-0.03, 0.52], [0, 0.58], [0, 0.8], [0.03, 0.86], [0.1, 0.88],
+];
+
+/** Fields that move. They take the time in seconds, and hold a fixed frame for reduced motion. */
+const ANIMATED: Partial<Record<Field, true>> = { leak: true };
+const STILL_T = 7.3;
+
 /** Greyscale fields in [0, 1]; each dot on the grid swells with the field's value at its centre. */
-const fields: Record<Field, (x: number, y: number) => number> = {
-  // Layer-similarity matrix.
-  cka(x, y) {
-    // A crisp diagonal, with the three similar blocks only faintly filled.
-    const diag = Math.exp(-Math.abs(x - y) * 26) * 0.95;
-    const block = Math.floor(x * 3) === Math.floor(y * 3) ? 0.035 : 0;
-    return Math.min(1, diag + block);
-  },
-  // A stack of layers; each input's band is full until its exit point, then fades out.
-  exit(x, y) {
-    const layer = Math.floor(y * 10), band = (y * 10) % 1;
-    const exitAt = 0.5 + 0.3 * Math.sin(layer * 1.3);
-    const on = band > 0.2 && band < 0.8 ? (x < exitAt ? 1 : Math.max(0, 0.4 - (x - exitAt) * 1.6)) : 0;
-    return on * (0.6 + 0.4 * (1 - layer / 10));
+const fields: Record<Field, (x: number, y: number, t: number) => number> = {
+  // A waffle of 100 requests in order of the small model's confidence. Small dots are answered by the
+  // small model, large blocks escalate to the large one. 67 of 100 stay small.
+  escort(x, y) {
+    const c = Math.floor(x * 30), r = Math.floor(y * 30);
+    const i = Math.floor(r / 3) * 10 + Math.floor(c / 3), u = c % 3, v = r % 3;
+    if (i < 67) return u === 1 && v === 1 ? 0.55 : 0;
+    return u < 2 && v < 2 ? 0.95 : 0;
   },
   // Large teacher distilled into a small student.
   distil(x, y) {
@@ -31,26 +48,28 @@ const fields: Record<Field, (x: number, y: number) => number> = {
     const beam = x > 0.34 && x < 0.8 && Math.abs(y - 0.5) < 0.06 * (1 - (x - 0.34) / 0.5) ? 0.45 : 0;
     return Math.min(1, teacher * 0.9 + student + beam);
   },
-  // An abstract whole-slide image: an irregular section of tissue, denser where glands cluster,
-  // with a faint grid of the patches it is cut into for the model.
-  rouge(x, y) {
-    const cx = 0.5, cy = 0.5;
-    const a = Math.atan2(y - cy, x - cx);
-    // A wide, softly lobed section (like a tissue slice on glass), no single peak.
-    const edge = 0.4 + 0.035 * Math.sin(a * 2 + 1.1) + 0.03 * Math.sin(a * 5 + 0.3) + 0.018 * Math.sin(a * 11 + 2);
-    const d = Math.hypot((x - cx) * 0.9, (y - cy) * 1.55);
-    if (d > edge) return 0;
-    // Gland-like clusters: small soft blobs of denser tissue, scattered through the section.
-    const glands: [number, number, number][] = [
-      [0.24, 0.47, 0.05], [0.36, 0.38, 0.06], [0.42, 0.58, 0.05], [0.53, 0.44, 0.07],
-      [0.64, 0.6, 0.05], [0.7, 0.4, 0.055], [0.8, 0.52, 0.045],
-    ];
-    let g = 0;
-    for (const [gx, gy, r] of glands) g = Math.max(g, 1 - Math.hypot(x - gx, y - gy) / r);
-    // Patch grid: thin lines every 1/6 of the tile thin the tissue slightly.
-    const gridLine = (v: number) => Math.min(v * 6 % 1, 1 - (v * 6 % 1)) < 0.11;
-    const base = 0.22 + 0.78 * Math.max(0, g);
-    return gridLine(x) || gridLine(y) ? 0.04 : base;
+  // Two big curly braces, the shape of a tool call.
+  amend(x, y) {
+    let d = 9;
+    for (const [cx, dir] of [[0.27, 1], [0.73, -1]])
+      for (let i = 0; i < BRACE.length - 1; i++) {
+        const [ax, ay] = BRACE[i], [bx, by] = BRACE[i + 1];
+        d = Math.min(d, seg(x, y, [cx + dir * ax, ay], [cx + dir * bx, by]));
+      }
+    return d < 0.03 ? 1 : d < 0.045 ? 0.2 : 0;
+  },
+  // Encrypted traffic as code rain. Every other column drips a stream with a bright head and a
+  // flickering tail that fades out.
+  leak(x, y, t) {
+    const c = Math.floor(x * 30), r = Math.floor(y * 30);
+    if (c % 2) return 0;
+    const speed = 5 + 7 * hash(c, 11), len = 9 + Math.floor(10 * hash(c, 23));
+    const span = 30 + len + 14 * hash(c, 37);
+    const d = ((hash(c, 51) * span + t * speed) % span) - r;
+    if (d < 0 || d >= len) return 0;
+    if (d < 1) return 1;
+    if (hash(c * 31 + r, Math.floor(t * 8)) < 0.2) return 0;
+    return 0.08 + 0.55 * Math.pow(1 - d / len, 1.4);
   },
 };
 
@@ -68,8 +87,12 @@ export default function HalftoneTile({ field, label }: { field: Field; label: st
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     const f = fields[field];
-    // Sample once: value at each dot centre.
-    const vals = Array.from({ length: N * N }, (_, k) => f(((k % N) + 0.5) / N, (Math.floor(k / N) + 0.5) / N));
+    // Value at each dot centre, sampled once, or every frame for a moving field.
+    const vals = new Float32Array(N * N);
+    const sample = (t: number) => {
+      for (let k = 0; k < N * N; k++) vals[k] = f(((k % N) + 0.5) / N, (Math.floor(k / N) + 0.5) / N, t);
+    };
+    sample(STILL_T);
     const state = { progress: reducedMotion() ? 1 : 0, lens: 0, lx: -999, ly: -999 };
     let w = 0, grid: HTMLCanvasElement | null = null, queued = 0;
 
@@ -133,8 +156,27 @@ export default function HalftoneTile({ field, label }: { field: Field; label: st
     canvas.addEventListener("pointermove", move);
     canvas.addEventListener("pointerenter", enter);
     canvas.addEventListener("pointerleave", leave);
+
+    // A moving field runs only while on screen, at the ambient frame rate, and not behind the menu.
+    let raf = 0, visible = false, drawn = 0;
+    const t0 = performance.now() - STILL_T * 1000, step = 1000 / ambientFps();
+    const loop = (now: number) => {
+      raf = visible ? requestAnimationFrame(loop) : 0;
+      if (now - drawn < step - 2 || document.documentElement.classList.contains("menu-open")) return;
+      drawn = now;
+      sample((now - t0) / 1000);
+      draw();
+    };
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      if (visible && !raf) raf = requestAnimationFrame(loop);
+    });
+    if (ANIMATED[field]) io.observe(canvas);
+
     return () => {
       ro.disconnect();
+      io.disconnect();
+      cancelAnimationFrame(raf);
       cancelAnimationFrame(queued);
       canvas.removeEventListener("pointermove", move);
       canvas.removeEventListener("pointerenter", enter);

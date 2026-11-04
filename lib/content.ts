@@ -38,7 +38,7 @@ export const tapes = [
     label: "Research",
     words: [
       "Pruning", "Early exit", "Distillation", "LoRA / PEFT", "CKA / Procrustes", "Conformal risk control",
-      "FlashAttention", "CUDA",
+      "Learn-then-test", "LLM cascades", "FlashAttention", "CUDA",
     ],
   },
   {
@@ -130,12 +130,13 @@ export const research: Role[] = [
     role: "Researcher",
     when: "Jun 2026 – Now",
     points: [
-      "Leading **2** studies on redundancy and efficient inference in foundation models",
-      "Showed similarity-based block removal (CKA, Procrustes) mostly reproduces an untrained network’s ranking (**ρ ≥ 0.88**)",
-      "Certified early exit with learn-then-test and LoRA (**7.3%** of weights), saving **14–39%** of encoder compute at **95%** confidence",
+      "Certified small-to-large escalation for tool calls, keeping **67%** of requests on the small model at a **30%** error target, where tuned thresholds broke it about half the time",
+      "Built agents that repair function-calling benchmark keys. Over **1 in 10** BFCL Live and ACEBench items reject a correct call, and the fixes lift a 32B model by up to **12** points",
+      "Certified early exit in a wireless foundation model, saving **14–39%** of encoder compute at **95%** confidence",
       "Showed the guarantee breaks when SNR is estimated, and restored it by certifying on estimated groups",
+      "Co-authored **2** studies on what encryption fails to hide, where agent service discovery reveals a drone’s mission at **0.947** balanced accuracy against **0.25** chance",
     ],
-    tags: ["Early exit", "Conformal", "LoRA", "CKA"],
+    tags: ["Tool calling", "LLM cascades", "Conformal", "Early exit"],
   },
   {
     org: "Bradbury",
@@ -171,22 +172,16 @@ export const research: Role[] = [
 ];
 
 export const researchIntro =
-  "Measuring structural redundancy against proper controls, compressing models, and attaching statistical guarantees to compression decisions. Open to exploring agentic research on resource-constrained devices.";
+  "Agentic AI under resource constraints. Long-horizon agents that plan, call tools and manage context on small models, where every call has a cost, and making those choices reliable rather than hand-tuned.";
 
-export type Field = "cka" | "exit" | "distil" | "rouge";
+export type Field = "escort" | "distil" | "amend" | "leak";
 
 export const tiles: { field: Field; title: string; note: string; label: string }[] = [
   {
-    field: "cka",
-    title: "Similarity ≠ importance",
-    note: "Blocks of similar layers look removable. Similarity predicts which ones no better than an untrained network.",
-    label: "Dot-matrix layer-similarity matrix with blocks of similar layers along the diagonal",
-  },
-  {
-    field: "exit",
-    title: "Certified early exit",
-    note: "Each band is an input through the layers, stopping where it is confident enough, with error ≤ α at 95% confidence.",
-    label: "Dot-matrix of inputs passing through a layer stack, each band fading out where it exits",
+    field: "escort",
+    title: "Certified escalation · ESCORT",
+    note: "A hundred requests ranked by confidence. The 67 small dots stay on the small model and the large blocks escalate, under a certified 30% error target that tuned thresholds miss about half the time.",
+    label: "Dot-matrix waffle of 100 requests, 67 small dots for the small model and 33 large blocks escalated to the large model",
   },
   {
     field: "distil",
@@ -195,16 +190,23 @@ export const tiles: { field: Field; title: string; note: string; label: string }
     label: "Dot-matrix of a large teacher model distilled into a small student",
   },
   {
-    field: "rouge",
-    title: "Facts, not words · MedGemma 1.5 4B",
-    note: "MedGemma 1.5 4B reads a slide into a fluent report, but gets treatment-critical facts wrong 41–67% of the time, and ROUGE-L can’t tell.",
-    label: "Dot-matrix of a whole-slide image: an irregular tissue section with denser gland clusters and a faint grid of patches"
+    field: "amend",
+    title: "Benchmark errata · AMEND",
+    note: "Over 1 in 10 BFCL Live and ACEBench items reject a correct call. Agents repair the broken keys, and a 32B model scores up to 12 points higher.",
+    label: "Dot-matrix of two large curly braces, the shape of a tool call",
+  },
+  {
+    field: "leak",
+    title: "Flight plans in plain sight",
+    note: "Encrypted, yet a drone’s service discovery still gives away its mission, at 0.947 balanced accuracy against 0.25 chance.",
+    label: "Dot-matrix code rain, streams of dots falling down the tile like encrypted traffic",
   },
 ];
 
 export const metrics = [
-  { value: "14–39%", label: "Encoder compute saved by certified early exit" },
-  { value: "≥0.88", label: "Spearman’s rho between similarity-based removal order and an untrained network’s" },
+  { value: "67%", label: "Of tool calls kept on the small model at a certified 30% error target" },
+  { value: "+12", label: "Accuracy points a 32B model regains once broken benchmark keys are repaired" },
+  { value: "0.947", label: "Balanced accuracy at reading a drone’s mission from encrypted service discovery" },
   { value: "89.6%", label: "Of the DeepSeek-VL2 (MoE) teacher’s performance retained by LiteDoc, on average" },
 ];
 
@@ -212,31 +214,44 @@ export const papers = [
   {
     id: "C1",
     title: "LiteDoc: Distilling Large Document Models into Efficient Task-Specific Encoders",
-    authors: ["Tayyab", "Taha", "Adrian", "Ulrich", "Momina", "Faisal"],
+    authors: ["Raza", "Taha", "Ulges", "Schwanecke", "Moetesum", "Shafait"],
     venue: "ICDAR 2026, Springer LNCS",
     href: "https://doi.org/10.1007/978-3-032-36033-5_25",
   },
   {
-    id: "M1",
-    title: "Similarity Is Not Importance: On Measuring Representational Redundancy in Wireless Foundation Models",
-    authors: ["Taha"],
-    venue: "Draft on request",
-    status: "In prep.",
+    id: "S1",
+    title: "ESCORT: Escalation with Statistical Certification of Risk Targets for Language-Model Service Brokers",
+    authors: ["Taha", "Zeeshan", "Hassan", "Cirillo", "Ahmed", "Hassan"],
+    venue: "IEEE Transactions on Services Computing, 2026",
+    status: "Under review",
   },
   {
-    id: "M2",
-    title: "Certified Early Exit in a Wireless Foundation Model When the Signal-to-Noise Ratio Must Be Estimated",
-    authors: ["Taha"],
-    venue: "Draft on request",
-    status: "In prep.",
+    id: "S2",
+    title: "AMEND: Agent-Mediated Errata for Noisy Datasets of Function-Calling Benchmarks",
+    authors: ["Taha", "Zeeshan", "Ahmad", "Hassan"],
+    venue: "IEEE ICC 2027",
+    status: "Under review",
   },
   {
-    id: "M3",
-    title:
-      "Accuracy of Craniometric Features in Gender Estimation Using Machine Learning Algorithms on University of Tennessee (UT) and Howells Datasets",
-    authors: ["Nuzhat", "Taha", "et al."],
-    venue: "2026",
-    status: "Submitted",
+    id: "S3",
+    title: "Flight Plans in Plain Sight: Intent Leakage in Agentic Service Discovery for Low-Altitude Wireless Networks",
+    authors: ["Ahmad", "Zeeshan", "Taha", "Dev", "Jung", "Hassan"],
+    venue: "IEEE Vehicular Technology Magazine, 2026",
+    status: "Under review",
+  },
+  {
+    id: "S4",
+    title: "Observable Participation: A Passive Aerial Threat to Secure Aggregation in HAPS Federated Learning",
+    authors: ["Ahmad", "Zeeshan", "Taha", "Hassan"],
+    venue: "IEEE ICC 2027",
+    status: "Under review",
+  },
+  {
+    id: "P1",
+    title: "Early Exit in a Wireless Foundation Model When the Signal-to-Noise Ratio Must Be Estimated",
+    authors: ["Taha", "et al."],
+    venue: "IEEE Transactions on Machine Learning in Communications and Networking, 2026",
+    status: "In prep.",
   },
 ];
 

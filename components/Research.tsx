@@ -90,7 +90,7 @@ export default function Research() {
               <h3 className="t">{p.title}</h3>
               <p className="a">
                 {p.authors.map((a, i) => (
-                  <span key={a}>
+                  <span key={i}>
                     {i > 0 && ", "}
                     {a === "Taha" ? <b>{a}</b> : a}
                   </span>
